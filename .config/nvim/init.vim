@@ -211,31 +211,12 @@ nmap <Leader>c :Commits<CR>
 nmap <Leader>t :BTags<CR>
 nmap <Leader>T :Tags<CR>
 
-" Assign a leader key for easy motion bundle
-let g:EasyMotion_leader_key = ','
-" Signify
-let g:signify_vcs_list = [ 'svn', 'git' ]
-
-" TODO: The following can be uncommented once
-"       TODO about vim-jsbeautify is done
-"autocmd FileType javascript noremap <buffer>  <c-f> :call   JsBeautify()<cr>
-" for html
-"autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-" for css or scss
-"autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 " Automagically remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
 
-" let g:monotone_color = [60, 56, 54]
-
 " powerline!
 let g:airline_powerline_fonts = 1
-" let g:airline_base16_monotone=1
-" let g:airline_theme='base16'
 let g:airline_theme = 'gruvbox_material'
-" let g:airline_theme='deus'
-" let g:airline_theme='gruvbox8'
-" let g:airline_theme='monotone'
 
 set laststatus=2
 " For pretty colors
@@ -243,10 +224,9 @@ set termguicolors
 
 set modelines=0		" CVE-2007-2438
 
-set equalalways     " Automatically resize window after splitting
+set equalalways   " Automatically resize window after splitting
 
 set backspace=2		" more powerful backspacing
-" set number          " Line numbers
 
 " Undo levels
 if version >= 700
@@ -315,11 +295,7 @@ endif
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   "rg --column --no-heading --smart-case --color=always
-    " \       --colors=path:fg:0xff,0xff,0xff
-    " \       --colors=line:fg:0xc6,0xc6,0xc6
-    " \       --colors=column:fg:0xc6,0xc6,0xc6
-    " \       --colors=match:fg:0xf9,0xc2,0x2b "
-    \ .shellescape(<q-args>), 1,
+  \ .shellescape(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
