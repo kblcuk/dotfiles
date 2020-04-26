@@ -1,0 +1,18 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": ["css", "Markdown", "javascript", "typescript"],
+  "prettier.onlyUseLocalVersion": true,
+  "eslint.autoFixOnSave": true,
+  "tsserver.enableJavascript": false,
+  "languageserver": {
+    "flow": {
+      "command": "${workspaceFolder}/node_modules/.bin/flow",
+      "args": ["lsp"],
+      "filetypes": ["javascript", "javascriptreact"],
+      "initializationOptions": {},
+      "requireRootPattern": true,
+      "settings": {},
+      "rootPatterns": [".flowconfig"]
+    }
+  }
+}
+
