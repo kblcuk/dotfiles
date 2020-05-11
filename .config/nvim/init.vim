@@ -31,8 +31,6 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 " Code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'mpyatishev/vim-sqlformat'
-
 " Tags, JS imports
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
