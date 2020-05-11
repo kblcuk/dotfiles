@@ -5,33 +5,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-inoremap jk <ESC>
-
-" Buffers
-nnoremap [b :bnext<cr>
-nnoremap ]b :bNext<cr>
-
-" Windows
-nnoremap <c-h> <c-w>h
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
-
-" quickfix shortcuts
-nmap ]q :cnext<cr>
-nmap ]Q :clast<cr>
-nmap [q :cprev<cr>
-nmap [Q :cfirst<cr>
-
-let mapleader = " "
-
-" Fancy autocomplete window
-set wildoptions=pum
-set pumblend=20
-
-" Switching to new buffer without saving current one is ok
-set hidden
-
 call plug#begin()
 
 Plug 'tpope/vim-sensible'
@@ -58,6 +31,8 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 " Code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'mpyatishev/vim-sqlformat'
+
 " Tags, JS imports
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
@@ -83,6 +58,37 @@ Plug 'camspiers/animate.vim'
 Plug 'camspiers/lens.vim'
 
 call plug#end()
+
+inoremap jk <ESC>
+
+" Buffers
+nnoremap [b :bnext<cr>
+nnoremap ]b :bNext<cr>
+
+" Windows
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+
+" quickfix shortcuts
+nmap ]q :cnext<cr>
+nmap ]Q :clast<cr>
+nmap [q :cprev<cr>
+nmap [Q :cfirst<cr>
+
+" Tree-view for netrw
+let g:netrw_liststyle = 3
+
+let mapleader = " "
+
+" Fancy autocomplete window
+set wildoptions=pum
+set pumblend=20
+
+" Switching to new buffer without saving current one is ok
+set hidden
+
 
 " Sadly Fish causes random mega-slowliness to vim-fugitive :(
 set shell=/bin/bash
@@ -280,7 +286,7 @@ if &t_Co > 2 || has("gui_running")
   set hlsearch
   " set background=light
   set background=dark
-  let g:gruvbox_material_background = 'soft'
+  let g:gruvbox_material_background = 'medium'
 
   colorscheme gruvbox-material
   " When the above becomes too colorful
@@ -294,7 +300,7 @@ endif
 " Use ripgrep instead of ag:
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   "rg --column --no-heading --smart-case --color=always
+  \   "rg --column --no-heading --smart-case --color=always"
   \ .shellescape(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
