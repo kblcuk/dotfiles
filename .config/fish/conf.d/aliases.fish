@@ -13,4 +13,4 @@ alias pt 'papertrail'
 
 alias vi 'nvim'
 alias vim 'nvim'
-alias config '/usr/bin/git --git-dir=$HOME/Code/dotfiles --work-tree=$HOME'
+alias config '/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
