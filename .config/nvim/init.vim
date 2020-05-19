@@ -115,6 +115,7 @@ function! s:check_back_space() abort
 endfunction
 
 filetype plugin indent on
+au BufNewFile,BufRead Jenkinsfile setf groovy
 
 " always show signcolumns
 set signcolumn=yes
