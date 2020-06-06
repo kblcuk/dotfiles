@@ -27,6 +27,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 
 " Autoformat
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+Plug 'editorconfig/editorconfig-vim'
 
 " Code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -89,6 +90,7 @@ set hidden
 
 " Sadly Fish causes random mega-slowliness to vim-fugitive :(
 set shell=/bin/bash
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " Coc.nvim
 " Better display for messages
