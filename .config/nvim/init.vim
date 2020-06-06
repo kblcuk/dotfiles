@@ -15,7 +15,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'ryanoasis/vim-devicons'
 
-" Themes.
+" Themes
 Plug 'sainnhe/gruvbox-material'
 Plug 'Lokaltog/vim-monotone'
 
@@ -31,9 +31,8 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 " Code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Tags, JS imports
+" Tags
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 
 " Fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
