@@ -87,6 +87,8 @@ set pumblend=20
 " Switching to new buffer without saving current one is ok
 set hidden
 
+" Disable vim's auto EOL, since linters are not happy with it
+set nofixendofline
 
 " Sadly Fish causes random mega-slowliness to vim-fugitive :(
 set shell=/bin/bash
