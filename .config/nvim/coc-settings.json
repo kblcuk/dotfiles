@@ -1,6 +1,4 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["css", "Markdown", "javascript", "typescript"],
-  "prettier.onlyUseLocalVersion": true,
   "eslint.autoFixOnSave": true,
   "tsserver.enableJavascript": false,
   "languageserver": {

@@ -25,7 +25,6 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'HerringtonDarkholme/yats.vim'
 
 " Autoformat
-Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'editorconfig/editorconfig-vim'
 
 " Code completion
@@ -121,9 +120,6 @@ au BufNewFile,BufRead Jenkinsfile setf groovy
 
 " always show signcolumns
 set signcolumn=yes
-
-" Coc.prettier
-command! -nargs=0 Prettier :CocCommand prettier.formatFile<Paste>
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -263,27 +259,6 @@ set scrolloff=5
 set ignorecase
 " ...except when our search input contains Capital letter
 set smartcase
-
-" Prettier conf
-" max line length that prettier will wrap on
-" Prettier default: 80
-let g:prettier#config#print_width = 120
-
-" number of spaces per indentation level
-" Prettier default: 2
-let g:prettier#config#tab_width = 2
-
-" use tabs over spaces
-" Prettier default: false
-let g:prettier#config#use_tabs = 'false'
-
-" print semicolons
-" Prettier default: true
-let g:prettier#config#semi = 'true'
-
-" single quotes over double quotes
-" Prettier default: false
-let g:prettier#config#single_quote = 'true'
 
 " animate
 let g:animate#duration = 150.0
