@@ -10,8 +10,7 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
 
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 
 Plug 'ryanoasis/vim-devicons'
 
@@ -222,9 +221,17 @@ nmap <Leader>T :Tags<CR>
 " Automagically remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
 
-" powerline!
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'gruvbox_material'
+" Lightline
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox_material',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
 
 set laststatus=2
 " For pretty colors
