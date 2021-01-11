@@ -11,6 +11,7 @@
   ],
   "modules-right": [
     "network",
+    "custom/vpn",
     "bluetooth",
     "cpu",
     "memory",
@@ -19,7 +20,7 @@
     "backlight",
     "idle_inhibitor",
     "pulseaudio",
-    "sway/layout",
+    "sway/language",
     "tray",
     "clock"
   ],
@@ -74,6 +75,14 @@
     "format-disconnected": "󱘖",
     "tooltip-format": "{ifname}: {ipaddr}",
     "on-click": "swaymsg exec \\$term_float nmtui"
+  },
+  "custom/vpn":{
+    "format": "{icon}",
+    "tooltip-format": "{icon}",
+    "exec": "$HOME/.config/waybar/scripts/wg-status.sh",
+    "return-type": "json",
+    "interval": 5,
+    "format-icons": ["",""]
   },
   "sway/mode": {
     "format": "<span style=\"italic\">{}</span>",
