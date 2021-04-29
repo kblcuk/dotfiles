@@ -199,6 +199,6 @@
       "disabled": "󰂲"
     },
     "on-click": "blueberry",
-    "tooltip-format": "{status}"
+    "tooltip-format": "{}"
   }
 }
