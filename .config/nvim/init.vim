@@ -10,25 +10,42 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
 
+" Status line
 Plug 'itchyny/lightline.vim'
 
-Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons' " lua
 
 " Themes
 Plug 'sainnhe/gruvbox-material'
-Plug 'Lokaltog/vim-monotone'
-
-" JS(X)
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
-" TypeScript
-Plug 'HerringtonDarkholme/yats.vim'
+"
+" Terraform
+Plug 'hashivim/vim-terraform'
 
 " Autoformat
 Plug 'editorconfig/editorconfig-vim'
 
+" tmux
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'preservim/vimux'
+
 " Code completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Keeping neoclide here just in case native LSP doesn't cut it
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'lifepillar/vim-mucomplete'
+
+" Telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Jsonnet is not supported by treesitter yet :|
+Plug 'google/vim-jsonnet'
+
 
 " Tags
 Plug 'ludovicchabant/vim-gutentags'
@@ -47,13 +64,20 @@ Plug 'tpope/vim-rhubarb'
 Plug 'mhinz/vim-signify'
 Plug 'junegunn/gv.vim'
 
+Plug 'pwntester/octo.nvim'
+
 " Stuff
 Plug 'tpope/vim-abolish'
 
-Plug 'camspiers/animate.vim'
-Plug 'camspiers/lens.vim'
-
 call plug#end()
+
+:lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true
+  },
+}
+EOF
 
 inoremap jk <ESC>
 
@@ -78,7 +102,24 @@ let g:netrw_liststyle = 3
 
 let mapleader = " "
 
-" Fancy autocomplete window
+" vim-fugitive short-cuts like DoomEmacs
+nnoremap <Leader>gg :Git<cr>
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fG <cmd>Telescope grep_string<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fl <cmd>Telescope git_files<cr>
+
+lua require('telescope').load_extension('octo')
+
+" Tmux
+map <leader>vp :VimuxPromptCommand<cr>
+map <leader>vl :VimuxRunLastCommand<cr>
+
+" Fa</cr></leader>cy autocomplete window
 set wildoptions=pum
 set pumblend=20
 
@@ -97,42 +138,48 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 set cmdheight=2
 
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+set updatetime=50
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
 
 " don't give |ins-completion-menu| messages.
+" Avoid showing message extra message when using completion
 set shortmess+=c
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+ " inoremap <silent><expr> <TAB>
+ "       \ pumvisible() ? "\<C-n>" :
+ "       \ <SID>check_back_space() ? "\<TAB>" :
+ "       \ coc#refresh()
+ " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+ " function! s:check_back_space() abort
+ "   let col = col('.') - 1
+ "   return !col || getline('.')[col - 1]  =~# '\s'
+ " endfunction
+
+" " Use `[g` and `]g` to navigate diagnostics
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" " " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+
+" command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" " " Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
 
 filetype plugin indent on
 au BufNewFile,BufRead Jenkinsfile setf groovy
 
 " always show signcolumns
 set signcolumn=yes
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
 
 " Gutentags
 " https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
@@ -201,18 +248,18 @@ let g:gutentags_ctags_exclude = [
 
 " Ctrl-F to search files with FZF
 " nnoremap <C-f> :Files<Cr>
-nnoremap <Leader>f :Files<Cr>
-nnoremap <Leader>F :GFiles<Cr>
-" Ctrl-G to search files contents with FZF and RipGrep
-nnoremap <Leader>g :Rg<Cr>
-" Buffers
-nmap <Leader>b :Buffers<CR>
-nmap <Leader>h :History<CR>
-" Git commits
-nmap <Leader>c :Commits<CR>
-" Tags
-nmap <Leader>t :BTags<CR>
-nmap <Leader>T :Tags<CR>
+" nnoremap <Leader>f :Files<Cr>
+" nnoremap <Leader>F :GFiles<Cr>
+" " Ctrl-G to search files contents with FZF and RipGrep
+" nnoremap <Leader>g :Rg<Cr>
+" " Buffers
+" nmap <Leader>b :Buffers<CR>
+" nmap <Leader>h :History<CR>
+" " Git commits
+" nmap <Leader>c :Commits<CR>
+" " Tags
+" nmap <Leader>t :BTags<CR>
+" nmap <Leader>T :Tags<CR>
 
 " Automagically remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
@@ -252,6 +299,7 @@ set tabstop=2
 set shiftwidth=2
 set shiftwidth=2
 set expandtab
+set smartindent
 
 set scrolloff=5
 
@@ -261,7 +309,10 @@ set ignorecase
 set smartcase
 
 " animate
-let g:animate#duration = 150.0
+" let g:animate#duration = 150.0
+
+" Default to static completion for SQL
+let g:omni_sql_default_compl_type = 'syntax'
 
 " Switch syntax highlighting on, when the terminal has colors
 " " Also switch on highlighting the last used search pattern.
@@ -271,14 +322,11 @@ if &t_Co > 2 || has("gui_running")
   " set background=light
   set background=dark
   let g:gruvbox_material_background = 'medium'
+  " let g:gruvbox_transparent_bg = 1
+  " let g:gruvbox_contrast_dark = 'soft'
 
+  " colorscheme gruvbox
   colorscheme gruvbox-material
-  " When the above becomes too colorful
-  " let g:monotone_color = [5, 25, 83]
-  " let g:monotone_emphasize_whitespace = 1
-  " let g:monotone_contrast_factor = 0.99
-  " let g:monotone_emphasize_comments = 1 " Emphasize comments
-  " colorscheme monotone
 endif
 
 " Use ripgrep instead of ag:
@@ -294,3 +342,10 @@ function! SearchWordWithRg()
   execute 'Rg' expand('<cword>')
 endfunction
 nnoremap <silent> K :call SearchWordWithRg()<CR>
+
+luafile ~/.config/nvim/nvim-lspconfig.lua
+
+" Completion
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
