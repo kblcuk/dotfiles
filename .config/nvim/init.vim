@@ -40,9 +40,10 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'lifepillar/vim-mucomplete'
 
 " Telescope
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+" This is somehow much slower than fzf, but maybe one day
+" Plug 'nvim-lua/popup.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -109,14 +110,14 @@ let mapleader = " "
 nnoremap <Leader>gg :Git<cr>
 
 " Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fG <cmd>Telescope grep_string<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>fl <cmd>Telescope git_files<cr>
+" nnoremap <leader>ff <cmd>Telescope find_files<cr>
+" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+" nnoremap <leader>fG <cmd>Telescope grep_string<cr>
+" nnoremap <leader>fb <cmd>Telescope buffers<cr>
+" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" nnoremap <leader>fl <cmd>Telescope git_files<cr>
 
-lua require('telescope').load_extension('octo')
+" lua require('telescope').load_extension('octo')
 
 " Tmux
 map <leader>vp :VimuxPromptCommand<cr>
@@ -249,19 +250,24 @@ let g:gutentags_ctags_exclude = [
       \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
       \ ]
 
-" Ctrl-F to search files with FZF
-" nnoremap <C-f> :Files<Cr>
-" nnoremap <Leader>f :Files<Cr>
-" nnoremap <Leader>F :GFiles<Cr>
-" " Ctrl-G to search files contents with FZF and RipGrep
-" nnoremap <Leader>g :Rg<Cr>
+" " Leader-F to search files with FZF
+nnoremap <Leader>FF :Files<Cr>
+nnoremap <Leader>ff :GFiles<Cr>
+" " Leader-G to search files contents with FZF and RipGrep
+nnoremap <Leader>fg :Rg<Cr>
+
+function! SearchWordWithRg()
+  execute 'Rg' expand('<cword>')
+endfunction
+
+nnoremap <Leader>fG :call SearchWordWithRg()<CR>
 " " Buffers
-" nmap <Leader>b :Buffers<CR>
-" nmap <Leader>h :History<CR>
+nmap <Leader>fb :Buffers<CR>
+nmap <Leader>fh :History<CR>
 " " Git commits
-" nmap <Leader>c :Commits<CR>
+nmap <Leader>fc :Commits<CR>
 " " Tags
-" nmap <Leader>t :BTags<CR>
+nmap <Leader>ft :BTags<CR>
 " nmap <Leader>T :Tags<CR>
 
 " Automagically remove trailing whitespace
@@ -332,19 +338,17 @@ if &t_Co > 2 || has("gui_running")
   colorscheme gruvbox-material
 endif
 
-" Use ripgrep instead of ag:
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   "rg --column --no-heading --smart-case --color=always "
-  \ .shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 
-function! SearchWordWithRg()
-  execute 'Rg' expand('<cword>')
-endfunction
-nnoremap <silent> K :call SearchWordWithRg()<CR>
+" Use ripgrep instead of ag:
+" command! -bang -nargs=* Rg
+"   \ call fzf#vim#grep(
+"   \   "rg --column --no-heading --smart-case --color=always "
+"   \ .shellescape(<q-args>), 1,
+"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
+"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+"   \   <bang>0)
+
 
 luafile ~/.config/nvim/nvim-lspconfig.lua
 
