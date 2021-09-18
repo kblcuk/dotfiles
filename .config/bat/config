@@ -1,5 +1,5 @@
 # Run `bat --help` to get a list of all possible configuration options.
 
 # for a list of all available themes
---theme="gruvbox-light"
-# --theme="gruvbox-dark"
+# --theme="gruvbox-light"
+--theme="gruvbox-dark"
