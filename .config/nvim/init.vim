@@ -28,6 +28,9 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'preservim/vimux'
 
+" Base64
+Plug 'christianrondeau/vim-base64'
+
 " Code completion
 " Keeping neoclide here just in case native LSP doesn't cut it
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
