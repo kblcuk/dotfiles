@@ -1,6 +1,6 @@
 set -gx EDITOR nvim
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
-set -gx TERMINAL /usr/bin/kitty
+set -gx TERMINAL kitty
 
 set -gx GPG_TTY (tty)
 
