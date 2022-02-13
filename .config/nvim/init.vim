@@ -38,6 +38,8 @@ Plug 'christianrondeau/vim-base64'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'lifepillar/vim-mucomplete'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'nvim-lua/plenary.nvim'
 
 " Telescope
 " This is somehow much slower than fzf, but maybe one day
