@@ -6,5 +6,5 @@ set -gx TFENV_ARCH (uname -m)
 
 set -gx GPG_TTY (tty)
 
-fish_add_path /opt/homebrew/bin/
-fish_add_path /opt/homebrew/opt/libpq/bin/
+fish_add_path /opt/homebrew/bin /opt/homebrew/sbin /opt/homebrew/opt/libpq/bin /opt/homebrew/opt/openjdk/bin
+fish_add_path /Users/alex/.cargo/bin
