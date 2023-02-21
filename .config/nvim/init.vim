@@ -23,12 +23,17 @@ Plug 'sainnhe/gruvbox-material'
 " Terraform
 Plug 'hashivim/vim-terraform'
 
+" Tilt
+Plug 'cappyzawa/starlark.vim'
+
 " Autoformat
 Plug 'editorconfig/editorconfig-vim'
 
 " tmux
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'preservim/vimux'
+
+Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'}
 
 " Base64
 Plug 'christianrondeau/vim-base64'
@@ -38,8 +43,18 @@ Plug 'christianrondeau/vim-base64'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-Plug 'lifepillar/vim-mucomplete'
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+
+" For luasnip users.
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'nvim-lua/plenary.nvim'
 
@@ -75,6 +90,7 @@ Plug 'pwntester/octo.nvim'
 
 " Stuff
 Plug 'tpope/vim-abolish'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
@@ -154,34 +170,6 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
- " inoremap <silent><expr> <TAB>
- "       \ pumvisible() ? "\<C-n>" :
- "       \ <SID>check_back_space() ? "\<TAB>" :
- "       \ coc#refresh()
- " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
- " function! s:check_back_space() abort
- "   let col = col('.') - 1
- "   return !col || getline('.')[col - 1]  =~# '\s'
- " endfunction
-
-" " Use `[g` and `]g` to navigate diagnostics
-" nmap <silent> [g <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" " " Remap keys for gotos
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
-
-" command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-" " " Remap for rename current word
-" nmap <leader>rn <Plug>(coc-rename)
-
 filetype plugin indent on
 au BufNewFile,BufRead Jenkinsfile setf groovy
 
@@ -252,6 +240,10 @@ let g:gutentags_ctags_exclude = [
       \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
       \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
       \ ]
+let g:gutentags_exclude_project_root = [
+      \ '/usr/local',
+      \ '/opt/homebrew',
+      \ ]
 
 " " Leader-F to search files with FZF
 nnoremap <Leader>FF :Files<Cr>
@@ -308,9 +300,6 @@ set ignorecase
 " ...except when our search input contains Capital letter
 set smartcase
 
-" animate
-" let g:animate#duration = 150.0
-
 " Default to static completion for SQL
 let g:omni_sql_default_compl_type = 'syntax'
 
@@ -319,31 +308,20 @@ let g:omni_sql_default_compl_type = 'syntax'
 if &t_Co > 2 || has("gui_running")
   syntax enable
   set hlsearch
-  " set background=light
-  set background=dark
-  let g:gruvbox_material_background = 'medium'
-  " let g:gruvbox_transparent_bg = 1
-  " let g:gruvbox_contrast_dark = 'soft'
 
-  " colorscheme gruvbox
+  set background=dark
+  " set background=light
+
+  let g:gruvbox_material_background = 'medium'
+  let g:gruvbox_transparent_bg = 1
+  " let g:gruvbox_contrast_dark = 'soft'
+  " let g:gruvbox_contrast_light = 'soft'
+
   colorscheme gruvbox-material
 endif
 
 let g:fzf_preview_window = ['right:50%', 'ctrl-/']
-
-" Use ripgrep instead of ag:
-" command! -bang -nargs=* Rg
-"   \ call fzf#vim#grep(
-"   \   "rg --column --no-heading --smart-case --color=always "
-"   \ .shellescape(<q-args>), 1,
-"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
-"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-"   \   <bang>0)
-
-
 luafile ~/.config/nvim/nvim-lspconfig.lua
 
 " Completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"

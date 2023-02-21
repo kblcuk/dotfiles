@@ -1,80 +1,62 @@
 -------------------- LSP ---------------------------------
+vim.lsp.set_log_level("error")
+
 local nvim_lsp = require("lspconfig")
-local lsp_completion = require("completion")
 local u = require("lspconfig.util")
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+vim.api.nvim_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	lsp_completion.on_attach()
+	-- Enable completion triggered by <c-x><c-o>
+	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	local function buf_set_keymap(...)
-		vim.api.nvim_buf_set_keymap(bufnr, ...)
-	end
-	local function buf_set_option(...)
-		vim.api.nvim_buf_set_option(bufnr, ...)
-	end
-
-	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-	-- Mappings
-	local opts = { noremap = true, silent = true }
-	buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	-- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-	buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-	buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-	buf_set_keymap("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-	buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-	buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	buf_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-	buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-	buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-	buf_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-
-	-- Set autocommands conditional on server_capabilities
-	-- if client.resolved_capabilities.document_highlight then
-	--   vim.api.nvim_exec([[
-	--     hi LspReferenceRead cterm=bold ctermbg=red guibg=Black
-	--     hi LspReferenceText cterm=bold ctermbg=red guibg=Black
-	--     hi LspReferenceWrite cterm=bold ctermbg=red guibg=Black
-	--     augroup lsp_document_highlight
-	--       autocmd! * <buffer>
-	--       autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-	--       autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-	--     augroup END
-	--   ]], false)
-	-- end
-
-	if client.resolved_capabilities.completion then
-		lsp_completion.on_attach(client, bufnr)
-	end
-
-	if client.config.flags then
-		client.config.flags.allow_incremental_sync = true
-	end
-	client.resolved_capabilities.document_formatting = false
+	-- Mappings.
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<space>wl",
+		"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+		opts
+	)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
 end
 
---Enable completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
--- This is kinda hacky and maybe not needed https://github.com/emacs-lsp/lsp-mode/issues/1449
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-local servers = { "pyright", "flow", "html", "cssls", "terraformls" }
+local servers = { "pyright", "html", "cssls", "terraformls" }
 for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup({
 		on_attach = on_attach,
-		capabilities = capabilities,
 	})
 end
+
+nvim_lsp.flow.setup({
+	on_attach = on_attach,
+})
 
 -- different tsserver setup, since javascript files should be handled by flow
 nvim_lsp.tsserver.setup({
 	on_attach = on_attach,
-	capabilities = capabilities,
-	filetypes = { "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" }, --  "javascriptreact" ?
+	filetypes = { "typescript", "typescriptreact", "typescript.tsx" }, --	"javascriptreact" ?
 })
 
 -- Formatting extras
@@ -126,8 +108,8 @@ end
 vim.api.nvim_exec(
 	[[
 augroup LSPImportOnCompletion
-    autocmd!
-    autocmd CompleteDone * lua lsp_import_on_completion()
+	autocmd!
+	autocmd CompleteDone * lua lsp_import_on_completion()
 augroup END
 ]],
 	false
@@ -142,7 +124,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.prettier.with({
 			prefer_local = "node_modules/.bin",
 		}),
-		-- null_ls.builtins.formatting.eslint,
+		null_ls.builtins.diagnostics.eslint_d,
 		null_ls.builtins.formatting.eslint_d,
 
 		null_ls.builtins.diagnostics.flake8,
@@ -151,24 +133,148 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.luacheck,
 		null_ls.builtins.formatting.stylua,
 
+		-- null_ls.builtins.diagnostics.yamllint,
+		-- null_ls.builtins.diagnostics.ansiblelint,
+
 		-- null_ls.builtins.formatting.terrafmt,
 		null_ls.builtins.formatting.terraform_fmt,
+
+		-- github actions
+		-- null_ls.builtins.diagnostics.actionlint,
+
+		-- docker
+		null_ls.builtins.diagnostics.hadolint,
 	},
-	-- you can reuse a shared lspconfig on_attach callback here
-	on_attach = function(client)
-		if client.resolved_capabilities.document_formatting then
+	on_attach = function(client, bufnr)
+		if client.server_capabilities.documentFormattingProvider then
+			-- fffrfr, this should use vim.api.nvim_create_autocmd
 			vim.cmd([[
-      augroup LspFormatting
-      autocmd! * <buffer>
-      autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
-      augroup END
-      ]])
+	augroup LspFormatting
+	autocmd! * <buffer>
+	autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms = 2000 })
+	augroup END
+	]])
+			-- vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+			-- vim.api.nvim_create_autocmd("BufWritePre", {
+			--	 group = augroup,
+			--	 buffer = bufnr,
+			--	 -- on 0.8, you should use vim.lsp.buf.format instead
+			--	 callback = vim.lsp.buf.format,
+			-- })
 		end
+		-- you can reuse a shared lspconfig on_attach callback here
+		-- on_attach = function(client)
+		--	 if client.server_capabilities.document_formatting then
+		--	 vim.cmd([[
+		-- augroup LspFormatting
+		-- autocmd! * <buffer>
+		-- autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
+		-- augroup END
+		-- ]])
+		--	 end
 	end,
 })
 
-require("trouble").setup({
-	-- your configuration comes here
-	-- or leave it empty to use the default settings
-	-- refer to the configuration section below
+require("trouble").setup()
+
+require("nvim-web-devicons").setup()
+require("lsp-colors").setup()
+require("lualine").setup({ theme = "gruvbox-dark" })
+
+-- Setup nvim-cmp.
+local cmp = require("cmp")
+local luasnip = require("luasnip")
+cmp.setup({
+	snippet = {
+		-- REQUIRED - you must specify a snippet engine
+		expand = function(args)
+			-- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+			luasnip.lsp_expand(args.body) -- For `luasnip` users.
+			-- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+			-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+		end,
+	},
+	window = {
+		-- completion = cmp.config.window.bordered(),
+		-- documentation = cmp.config.window.bordered(),
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<C-d>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<CR>"] = cmp.mapping.confirm({
+			select = false,
+		}),
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+	}),
+	-- mapping = cmp.mapping.preset.insert({
+	--	 ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+	--	 ["<C-f>"] = cmp.mapping.scroll_docs(4),
+	--	 ["<C-Space>"] = cmp.mapping.complete(),
+	--	 ["<C-e>"] = cmp.mapping.abort(),
+	--	 ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+	-- }),
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		-- { name = 'vsnip' }, -- For vsnip users.
+		{ name = "luasnip" }, -- For luasnip users.
+		-- { name = 'ultisnips' }, -- For ultisnips users.
+		-- { name = 'snippy' }, -- For snippy users.
+	}, {
+		{ name = "buffer" },
+	}),
 })
+
+-- Set configuration for specific filetype.
+cmp.setup.filetype("gitcommit", {
+	sources = cmp.config.sources({
+		{ name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
+	}, {
+		{ name = "buffer" },
+	}),
+})
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline("/", {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = "buffer" },
+	},
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(":", {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = "path" },
+	}, {
+		{ name = "cmdline" },
+	}),
+})
+
+-- Setup lspconfig.
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+for _, lsp in ipairs(servers) do
+	nvim_lsp[lsp].setup({
+		capabilities = capabilities,
+	})
+end
