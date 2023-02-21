@@ -1,3 +1,5 @@
+# ASDF config, not everyone use this
+.tool-versions
 # Compiled source #
 ###################
 *.com
