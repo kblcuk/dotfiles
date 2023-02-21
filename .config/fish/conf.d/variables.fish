@@ -14,3 +14,5 @@ set -gx fish_cursor_insert line
 set -gx fish_cursor_replace underscore
 set -gx fish_cursor_replace_one underscore
 set -gx fish_cursor_visual block
+
+set -gx FZF_DEFAULT_OPTS '--color=dark'
