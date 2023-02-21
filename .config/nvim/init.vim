@@ -11,7 +11,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
 
 " Status line
-Plug 'itchyny/lightline.vim'
+Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'kyazdani42/nvim-web-devicons' " lua
 
@@ -51,7 +51,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Jsonnet is not supported by treesitter yet :|
 Plug 'google/vim-jsonnet'
-
 
 " Tags
 Plug 'ludovicchabant/vim-gutentags'
@@ -274,18 +273,6 @@ nmap <Leader>ft :BTags<CR>
 
 " Automagically remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
-
-" Lightline
-let g:lightline = {
-      \ 'colorscheme': 'gruvbox_material',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
-      \ },
-      \ }
 
 set laststatus=2
 " For pretty colors
