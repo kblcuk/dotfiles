@@ -14,6 +14,8 @@ Plug 'tpope/vim-commentary'
 Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'kyazdani42/nvim-web-devicons' " lua
+Plug 'folke/trouble.nvim'
+Plug 'folke/lsp-colors.nvim'
 
 " Themes
 Plug 'sainnhe/gruvbox-material'
