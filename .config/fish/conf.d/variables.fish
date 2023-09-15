@@ -15,4 +15,12 @@ set -gx fish_cursor_replace underscore
 set -gx fish_cursor_replace_one underscore
 set -gx fish_cursor_visual block
 
-set -gx FZF_DEFAULT_OPTS '--color=dark'
+set -gx FZF_DEFAULT_OPTS '--color=light
+	--color=fg:#908caa,bg:#191724,hl:#ebbcba
+	--color=fg+:#e0def4,bg+:#26233a,hl+:#ebbcba
+	--color=border:#403d52,header:#31748f,gutter:#191724
+	--color=spinner:#f6c177,info:#9ccfd8,separator:#403d52
+	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa
+  --color=light'
+
+fish_config theme choose "Rosé Pine Dawn"
