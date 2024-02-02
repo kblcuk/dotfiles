@@ -2,9 +2,11 @@
 -- General Neovim settings and configuration
 -----------------------------------------------------------
 
-vim.o.background = "light" -- or "light" for light mode
--- vim.cmd([[colorscheme gruvbox]])
+vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[colorscheme rose-pine]])
+
+-- Sync clipboard between OS and Neovim
+vim.o.clipboard = "unnamedplus"
 
 -- navigation
 vim.keymap.set({ "n", "t" }, "<A-h>", "<CMD>NavigatorLeft<CR>")

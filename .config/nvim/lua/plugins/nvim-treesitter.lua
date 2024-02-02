@@ -13,6 +13,9 @@ end
 -- See: https://github.com/nvim-treesitter/nvim-treesitter#quickstart
 nvim_treesitter.setup({
 	-- A list of parser names, or "all"
+	modules = {},
+	ignore_install = {},
+	auto_install = true,
 	ensure_installed = {
 		"css",
 		"html",

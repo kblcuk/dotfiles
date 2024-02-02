@@ -34,7 +34,6 @@ require("lazy").setup({
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons", lazy = true },
-		opts = {},
 	},
 	{
 		"ibhagwan/fzf-lua",
@@ -55,25 +54,62 @@ require("lazy").setup({
 		opts = {},
 	},
 	{
-		"knubie/vim-kitty-navigator",
-	},
-	{
 		"numToStr/Navigator.nvim",
 		opts = {},
 	},
+
+	--  The configuration is done below. Search for lspconfig to find it below.
 	{
-		"williamboman/mason.nvim",
-		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
+		-- LSP Configuration & Plugins
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			-- Automatically install LSPs to stdpath for neovim
+			{ "williamboman/mason.nvim", config = true },
+			"williamboman/mason-lspconfig.nvim",
+
+			-- Useful status updates for LSP
+			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+			{ "j-hui/fidget.nvim", opts = {} },
+
+			-- Additional lua configuration, makes nvim stuff amazing!
+			"folke/neodev.nvim",
+			{
+				"linrongbin16/lsp-progress.nvim",
+				config = function()
+					require("lsp-progress").setup({})
+				end,
+			},
+		},
 	},
-	{ "williamboman/mason-lspconfig.nvim" },
-	{ "neovim/nvim-lspconfig" },
+
+	-- better typescript https://github.com/pmizio/typescript-tools.nvim
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		opts = {},
+	},
+
+	{ "simrat39/rust-tools.nvim", opts = {} },
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-	-- { "nvim-treesitter/nvim-treesitter" },
-	{ "hrsh7th/cmp-nvim-lsp" },
-	{ "hrsh7th/cmp-buffer" },
-	{ "hrsh7th/cmp-path" },
-	{ "hrsh7th/cmp-cmdline" },
-	{ "hrsh7th/nvim-cmp" },
+	{
+		-- Autocompletion
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			-- Snippet Engine & its associated nvim-cmp source
+			{ "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
+			"saadparwaiz1/cmp_luasnip",
+
+			-- Adds LSP completion capabilities
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-path",
+
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-cmdline",
+
+			-- Adds a number of user-friendly snippets
+			"rafamadriz/friendly-snippets",
+		},
+	},
 
 	{ "tpope/vim-commentary" },
 	{ "tpope/vim-fugitive" },
@@ -83,20 +119,17 @@ require("lazy").setup({
 
 	{ "lewis6991/gitsigns.nvim", opts = {} },
 
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-	},
-
 	{ "windwp/nvim-autopairs", opts = {} },
+	{
+		"stevearc/conform.nvim",
+		opts = {},
+	},
 }, {
 	checker = {
 		-- automatically check for plugin updates
 		enabled = true,
 		concurrency = nil, ---@type number? set to 1 to check for updates very slowly
 		notify = true, -- get a notification when new updates are found
-		frequency = 7200, -- check for updates every hour
+		frequency = 43200, -- check for updates daily
 	},
 })
