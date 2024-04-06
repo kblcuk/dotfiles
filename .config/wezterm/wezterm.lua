@@ -1,7 +1,11 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
-local colors = require("lua/rose-pine-dawn").colors()
-local window_frame = require("lua/rose-pine-dawn").window_frame()
+--
+local colors_light = require("lua/rose-pine-dawn").colors()
+local window_frame_light = require("lua/rose-pine-dawn").window_frame()
+
+local colors_dark = require("lua/rose-pine-moon").colors()
+local window_frame_dark = require("lua/rose-pine-moon").window_frame()
 
 local function isViProcess(pane)
 	-- get_foreground_process_name On Linux, macOS and Windows,
@@ -35,12 +39,37 @@ wezterm.on("ActivatePaneDirection-down", function(window, pane)
 	conditionalActivatePane(window, pane, "Down", "j")
 end)
 
+-- wezterm.gui is not available to the mux server, so take care to
+-- do something reasonable when this config is evaluated by the mux
+local function get_appearance()
+	if wezterm.gui then
+		return wezterm.gui.get_appearance()
+	end
+	return "Dark"
+end
+
+local function colors_for_appearance(appearance)
+	if appearance:find("Dark") then
+		return colors_dark
+	else
+		return colors_light
+	end
+end
+
+local function window_frame_for_appearance(appearance)
+	if appearance:find("Dark") then
+		return window_frame_dark
+	else
+		return window_frame_light
+	end
+end
+
 return {
-	-- font = wezterm.font("JetBrains Mono"),
+	window_background_opacity = 0.95,
 	window_decorations = "RESIZE",
 	scrollback_lines = 9000,
-	colors = colors,
-	window_frame = window_frame, -- needed only if using fancy tab bar
+	colors = colors_for_appearance(get_appearance()),
+	window_frame = window_frame_for_appearance(get_appearance()),
 	keys = {
 		{ key = "Enter", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 		{ key = "Enter", mods = "CMD|CTRL", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
