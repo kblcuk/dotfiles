@@ -30,7 +30,21 @@ require("lazy").setup({
 		end,
 	},
 	-- { "ellisonleao/gruvbox.nvim", priority = 1000, lazy = false },
-	{ "rose-pine/neovim", priority = 1000, lazy = false },
+	{
+		"rose-pine/neovim",
+		name = "rose-pine",
+		lazy = false,
+		opts = {
+			variant = "auto", -- auto, main, moon, or dawn
+			dark_variant = "moon", -- main, moon, or dawn
+			enable = {
+				terminal = true,
+			},
+			styles = {
+				transparency = true,
+			},
+		},
+	},
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons", lazy = true },
@@ -39,14 +53,17 @@ require("lazy").setup({
 		"ibhagwan/fzf-lua",
 		-- optional for icon support
 		dependencies = { "nvim-tree/nvim-web-devicons", lazy = true },
-		opts = {
-			git = {
-				bcommits = {
-					cmd = "git log --color --follow --pretty=format:'%C(yellow)%h%Creset "
-						.. "%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' <file>",
-				},
-			},
-		},
+		config = function()
+			-- calling `setup` is optional for customization
+			require("fzf-lua").setup({
+				-- git = {
+				--   bcommits = {
+				--     cmd = "git log --color --follow --pretty=format:'%C(yellow)%h%Creset "
+				--       .. "%Cgreen(%><(12)%cr%><|(12))%Creset %s %C(blue)<%an>%Creset' <file>",
+				--   },
+				-- },
+			})
+		end,
 	},
 	{
 		"folke/trouble.nvim",
@@ -90,7 +107,6 @@ require("lazy").setup({
 	},
 
 	{ "simrat39/rust-tools.nvim", opts = {} },
-	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{
 		-- Autocompletion
 		"hrsh7th/nvim-cmp",
@@ -111,7 +127,9 @@ require("lazy").setup({
 		},
 	},
 
-	{ "tpope/vim-commentary" },
+	{ "JoosepAlviste/nvim-ts-context-commentstring", dependencies = {
+		{ "tpope/vim-commentary" },
+	} },
 	{ "tpope/vim-fugitive" },
 	{ "tpope/vim-rhubarb" },
 	{ "tpope/vim-surround" },
@@ -124,6 +142,33 @@ require("lazy").setup({
 		"stevearc/conform.nvim",
 		opts = {},
 	},
+	{
+		"nvim-java/nvim-java",
+		dependencies = {
+			"nvim-java/lua-async-await",
+			"nvim-java/nvim-java-core",
+			"nvim-java/nvim-java-test",
+			"nvim-java/nvim-java-dap",
+			"MunifTanjim/nui.nvim",
+			"neovim/nvim-lspconfig",
+			"mfussenegger/nvim-dap",
+			{
+				"williamboman/mason.nvim",
+				opts = {
+					registries = {
+						"github:nvim-java/mason-registry",
+						"github:mason-org/mason-registry",
+					},
+				},
+			},
+		},
+	},
+	"cormacrelf/dark-notify",
+
+	-- plugins folder
+	require("plugins.nvim-treesitter"),
+	require("plugins.markdown-preview"),
+	require("plugins.venv-selector"),
 }, {
 	checker = {
 		-- automatically check for plugin updates

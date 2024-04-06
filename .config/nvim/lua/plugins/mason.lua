@@ -1,7 +1,10 @@
 require("mason").setup()
+-- local nvim_lsp = require("lspconfig")
 
 -- Setup neovim lua configuration
 require("neodev").setup()
+
+require("java").setup()
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -16,10 +19,26 @@ local servers = {
 	docker_compose_language_service = {},
 	dockerls = {},
 	tsserver = {},
-	pyright = {},
-	-- sqls formatting somehow really messes
-	-- up any sql, maybe one day
-	-- sqls = {},
+	pylsp = {},
+
+	volar = {},
+
+	jdtls = {},
+	eslint = {
+		-- no astro, because their eslint plugin seems to be broken
+		filetypes = {
+			"javascript",
+			"javascriptreact",
+			"javascript.jsx",
+			"typescript",
+			"typescriptreact",
+			"typescript.tsx",
+			"vue",
+			"svelte",
+			"",
+			-- "astro"
+		},
+	},
 }
 
 mason_lspconfig.setup({
@@ -75,6 +94,24 @@ mason_lspconfig.setup_handlers({
 			on_attach = on_attach,
 			settings = servers[server_name],
 			filetypes = (servers[server_name] or {}).filetypes,
+		})
+	end,
+	-- Next, you can provide a dedicated handler for specific servers.
+	-- For example, a handler override for the `rust_analyzer`:
+	-- ["rust_analyzer"] = function ()
+	--     require("rust-tools").setup {}
+	-- end
+	["volar"] = function()
+		require("lspconfig").volar.setup({
+			filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+			init_options = {
+				vue = {
+					hybridMode = false,
+				},
+				typescript = {
+					tsdk = vim.fn.getcwd() .. "node_modules/typescript",
+				},
+			},
 		})
 	end,
 })

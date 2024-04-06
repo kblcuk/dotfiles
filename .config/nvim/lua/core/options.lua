@@ -2,7 +2,8 @@
 -- General Neovim settings and configuration
 -----------------------------------------------------------
 
-vim.o.background = "dark" -- or "light" for light mode
+-- vim.o.background = "dark" -- or "light" for light mode
+require("dark_notify").run()
 vim.cmd([[colorscheme rose-pine]])
 
 -- Sync clipboard between OS and Neovim
@@ -68,3 +69,8 @@ vim.o.completeopt = menuone, noinsert, noselect
 -- don't give |ins-completion-menu| messages.
 -- Avoid showing message extra message when using completion
 -- vim.o.shortmess+=c
+
+-- Neovide
+vim.g.neovide_cursor_animation_length = 0.03
+vim.g.neovide_scroll_animation_length = 0.12
+vim.g.neovide_cursor_trail_size = 0.01
