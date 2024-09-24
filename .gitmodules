@@ -1,3 +1,0 @@
-[submodule "/home/alex/.config/polybar/scripts/polybar-bluetooth"]
-	path = /home/alex/.config/polybar/scripts/polybar-bluetooth
-	url = https://github.com/msaitz/polybar-bluetooth
