@@ -44,6 +44,10 @@ in
           source = ./dotfiles/lazyvim;
           recursive = true;
         };
+        ".config/amethyst" = {
+          source = ./dotfiles/amethyst;
+          recursive = true;
+        };
       };
       home.packages = with pkgs; [
         cachix
