@@ -4,6 +4,10 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     cachix
+    # some language servers require node
+    # or cargo to be installed
+    nodejs_22
+    cargo
     nixfmt-rfc-style
     vim
     devenv
