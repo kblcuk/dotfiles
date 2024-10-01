@@ -13,6 +13,7 @@ return {
 		opts = {
 			ensure_installed = {
 				"bash",
+				"css",
 				"html",
 				"javascript",
 				"json",
@@ -22,9 +23,11 @@ return {
 				"python",
 				"query",
 				"regex",
+				"scss",
 				"tsx",
 				"typescript",
 				"vim",
+				"vue",
 				"yaml",
 			},
 		},
