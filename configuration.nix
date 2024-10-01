@@ -67,17 +67,22 @@
   security.pam.enableSudoTouchIdAuth = true;
 
   system.defaults = {
+    # finder.AppleShowAllExtensions = true;
+    # finder.FXPreferredViewStyle = "clmv";
+    NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
     NSGlobalDomain.AppleInterfaceStyleSwitchesAutomatically = true;
+    dock.autohide = true;
+    dock.mru-spaces = false;
+    dock.orientation = "left";
+    dock.tilesize = 16;
+    finder.ShowPathbar = true;
+    menuExtraClock.Show24Hour = true;
+    screencapture.location = "~/Pictures/screenshots";
+    screensaver.askForPassword = true;
+    screensaver.askForPasswordDelay = 10;
     trackpad.Clicking = true;
     trackpad.TrackpadRightClick = true;
     universalaccess.reduceMotion = true;
-    dock.autohide = true;
-    dock.mru-spaces = false;
-    # finder.AppleShowAllExtensions = true;
-    # finder.FXPreferredViewStyle = "clmv";
-    loginwindow.LoginwindowText = "If found, please call +358 45 13 669 13, or email alexei.mikhailov@pm.me 🙏";
-    screencapture.location = "~/Pictures/screenshots";
-    screensaver.askForPasswordDelay = 10;
   };
   system.keyboard = {
     enableKeyMapping = true;
