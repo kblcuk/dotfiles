@@ -23,6 +23,7 @@
     fish
   ];
   environment.pathsToLink = [ "/share/fish" ];
+  networking.hostName = "joiedevirve";
 
   homebrew = {
     enable = true;

@@ -20,9 +20,11 @@ in
     mac-app-util.homeManagerModules.default
   ];
 
+  users.knownUsers = [ "alex" ];
   users.users.alex = {
     name = "alex";
     home = "/Users/alex";
+    shell = pkgs.fish;
   };
   home-manager.users.alex =
     { pkgs, ... }:
@@ -33,22 +35,23 @@ in
           recursive = true;
         };
         ".config/wezterm/lua" = {
-          source = ./dotfiles/wezterm/lua;
+          source = ../../dotfiles/wezterm/lua;
           recursive = true;
         };
         ".config/fish" = {
-          source = ./dotfiles/fish;
+          source = ../../dotfiles/fish;
           recursive = true;
         };
         ".config/lazyvim" = {
-          source = ./dotfiles/lazyvim;
+          source = ../../dotfiles/lazyvim;
           recursive = true;
         };
         ".config/amethyst" = {
-          source = ./dotfiles/amethyst;
+          source = ../../dotfiles/amethyst;
           recursive = true;
         };
       };
+
       home.packages = with pkgs; [
         cachix
         gnupg
@@ -67,12 +70,13 @@ in
         pinentry-curses
         github-cli
         (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+        speedtest-cli
       ];
 
       programs.wezterm = {
         enable = true;
         package = inputs.wezterm.packages.${pkgs.system}.default;
-        extraConfig = builtins.readFile ./dotfiles/wezterm/wezterm.lua;
+        extraConfig = builtins.readFile ../../dotfiles/wezterm/wezterm.lua;
       };
 
       programs.bat = {
@@ -106,15 +110,7 @@ in
       programs.zoxide.enable = true;
       programs.fzf.enable = true;
       programs.fzf.enableFishIntegration = false;
-      programs.zsh = {
-        enable = true;
-        initExtra = ''
-          if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
-          then
-              exec fish -l
-          fi
-        '';
-      };
+      programs.zsh.enable = true;
 
       programs.fish = {
         enable = true;

@@ -33,25 +33,38 @@
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .
       # $ darwin-rebuild build --flake .#simple
-      darwinConfigurations."joiedevirve" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations.joiedevirve = nix-darwin.lib.darwinSystem {
         specialArgs = {
           inherit inputs mac-app-util;
         };
         modules = [
           # Allow unfree packages.
           { nixpkgs.config.allowUnfree = true; }
-          ./configuration.nix
-          ./home.nix
+          ./machines/joiedevirve/configuration.nix
+          ./machines/joiedevirve/home.nix
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
           }
         ];
-
       };
-
-      # Expose the package set, including overlays, for convenience.
-      darwinPackages = self.darwinConfigurations."joiedevirve".pkgs;
+      # there is probably some way to simplify this copy-pasta
+      darwinConfigurations.chatjoyeux = nix-darwin.lib.darwinSystem {
+        specialArgs = {
+          inherit inputs mac-app-util;
+        };
+        modules = [
+          # Allow unfree packages.
+          { nixpkgs.config.allowUnfree = true; }
+          ./machines/chatjoyeux/configuration.nix
+          ./machines/chatjoyeux/home.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
+        ];
+      };
     };
 }
