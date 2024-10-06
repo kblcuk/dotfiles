@@ -49,6 +49,7 @@
     trusted-public-keys = [ "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0=" ];
     extra-substituters = [ "https://devenv.cachix.org" ];
     extra-trusted-public-keys = [ "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=" ];
+    trusted-users = [ "@admin" ];
   };
 
   # Create /etc/zshrc that loads the nix-darwin environment.
