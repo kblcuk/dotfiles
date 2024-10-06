@@ -55,6 +55,7 @@ in
         bat
         httpie
         neovim
+        neovide
         ripgrep
         coreutils
         fd
