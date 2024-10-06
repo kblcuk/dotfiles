@@ -3,6 +3,9 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    fish
+    zsh
+    bashInteractive
     cachix
     # some language servers require node
     # or cargo to be installed
@@ -50,7 +53,7 @@
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
-
+  programs.bash.enable = true;
   programs.fish.enable = true;
 
   # Set Git commit hash for darwin-version.
