@@ -20,7 +20,6 @@ in
     mac-app-util.homeManagerModules.default
   ];
 
-  users.knownUsers = [ "alex" ];
   users.users.alex = {
     name = "alex";
     home = "/Users/alex";
