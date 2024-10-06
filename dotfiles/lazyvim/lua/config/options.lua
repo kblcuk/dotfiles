@@ -12,3 +12,5 @@ opt.list = false
 opt.shell = "/bin/bash"
 
 vim.g.lazyvim_python_ruff = "ruff"
+vim.g.lazyvim_picker = "fzf"
+
