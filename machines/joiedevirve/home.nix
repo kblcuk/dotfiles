@@ -16,9 +16,7 @@ in
 {
   # Auto-link .app to correct location, 
   # so spotlight finds them
-  home-manager.sharedModules = [
-    mac-app-util.homeManagerModules.default
-  ];
+  home-manager.sharedModules = [ mac-app-util.homeManagerModules.default ];
 
   users.users.alex = {
     name = "alex";
@@ -80,7 +78,6 @@ in
 
       programs.bat = {
         enable = true;
-        extraPackages = [ pkgs.bat-extras.batman ];
         config = {
           theme = "rose-pine-dawn";
         };
