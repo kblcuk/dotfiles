@@ -2,13 +2,14 @@
   description = "Darwin system @kblcuk";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wezterm = {
@@ -21,10 +22,11 @@
   outputs =
     inputs@{
       self,
+      nixpkgs,
+      nixpkgs-unstable,
       nix-darwin,
       home-manager,
       wezterm,
-      nixpkgs,
       mac-app-util,
       ...
     }:
@@ -38,8 +40,10 @@
           inherit inputs mac-app-util;
         };
         modules = [
-          # Allow unfree packages.
-          { nixpkgs.config.allowUnfree = true; }
+          {
+            # Allow unfree packages.
+            nixpkgs.config.allowUnfree = true;
+          }
           ./machines/joiedevirve/configuration.nix
           ./machines/joiedevirve/home.nix
           home-manager.darwinModules.home-manager
