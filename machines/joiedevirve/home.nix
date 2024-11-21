@@ -49,25 +49,27 @@ in
         };
       };
 
-      home.packages = with pkgs; [
-        cachix
-        gnupg
-        bat
-        httpie
-        neovim
-        neovide
-        ripgrep
-        coreutils
-        fd
-        eza
-        delta
-        lazygit
-        glow
-        pinentry_mac
-        pinentry-curses
-        github-cli
+      home.packages = with inputs.nixpkgs.legacyPackages.${pkgs.system}; [
         (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+        aria2
+        bitwarden
+        coreutils
+        diffutils
+        eza
+        fd
+        ffmpeg
+        github-cli
+        glow
+        gnupg
+        httpie
+        lazygit
+        neovim
+        pinentry-curses
+        pinentry_mac
+        ripgrep
         speedtest-cli
+        starship
+        wget
       ];
 
       programs.wezterm = {
@@ -104,8 +106,6 @@ in
       };
 
       programs.zoxide.enable = true;
-      programs.fzf.enable = true;
-      programs.fzf.enableFishIntegration = false;
       programs.zsh.enable = true;
 
       programs.fish = {
@@ -145,7 +145,6 @@ in
             set fish_user_paths $fish_user_paths
           '';
       };
-      programs.starship.enable = true;
 
       # The state version is required and should stay at the version you
       # originally installed.
