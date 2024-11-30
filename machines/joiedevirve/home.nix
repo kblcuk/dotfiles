@@ -50,7 +50,7 @@ in
       };
 
       home.packages = with inputs.nixpkgs.legacyPackages.${pkgs.system}; [
-        (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+        nerd-fonts.jetbrains-mono
         aria2
         coreutils
         diffutils

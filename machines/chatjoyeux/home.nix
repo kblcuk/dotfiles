@@ -52,6 +52,7 @@ in
       };
 
       home.packages = with pkgs; [
+        nerd-fonts.jetbrains-mono
         cachix
         gnupg
         bat
@@ -68,7 +69,6 @@ in
         pinentry_mac
         pinentry-curses
         github-cli
-        (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         speedtest-cli
         kubernetes-helm
         kubectl
