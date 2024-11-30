@@ -52,7 +52,6 @@ in
       home.packages = with inputs.nixpkgs.legacyPackages.${pkgs.system}; [
         (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         aria2
-        bitwarden
         coreutils
         diffutils
         eza
