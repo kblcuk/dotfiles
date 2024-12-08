@@ -14,7 +14,7 @@ let
   };
 in
 {
-  # Auto-link .app to correct location, 
+  # Auto-link .app to correct location,
   # so spotlight finds them
   home-manager.sharedModules = [ mac-app-util.homeManagerModules.default ];
 
@@ -49,27 +49,29 @@ in
         };
       };
 
-      home.packages = with inputs.nixpkgs.legacyPackages.${pkgs.system}; [
-        nerd-fonts.jetbrains-mono
-        aria2
-        coreutils
-        diffutils
-        eza
-        fd
-        ffmpeg
-        github-cli
-        glow
-        gnupg
-        httpie
-        lazygit
-        neovim
-        pinentry-curses
-        pinentry_mac
-        ripgrep
-        speedtest-cli
-        starship
-        wget
-      ];
+      home.packages =
+        with pkgs;
+        [
+          aria2
+          coreutils
+          diffutils
+          eza
+          fd
+          ffmpeg
+          github-cli
+          glow
+          gnupg
+          httpie
+          lazygit
+          neovim
+          pinentry-curses
+          pinentry_mac
+          ripgrep
+          speedtest-cli
+          starship
+          wget
+        ]
+        ++ (with inputs.nixpkgs.legacyPackages.${pkgs.system}; [ nerd-fonts.jetbrains-mono ]);
 
       programs.wezterm = {
         enable = true;
