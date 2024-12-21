@@ -14,6 +14,8 @@ opt.shell = "/bin/bash"
 vim.g.lazyvim_python_ruff = "ruff"
 vim.g.lazyvim_picker = "fzf"
 
+vim.g.snacks_animate = false
+
 vim.g.neovide_theme = "auto"
 vim.g.neovide_position_animation_length = 0.1
 vim.g.neovide_cursor_animation_length = 0.04
