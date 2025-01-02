@@ -14,7 +14,7 @@
     };
     wezterm = {
       url = "github:wez/wezterm/main?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     mac-app-util.url = "github:hraban/mac-app-util";
   };
