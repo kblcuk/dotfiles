@@ -29,7 +29,7 @@
   };
 
   outputs =
-    inputs@{
+    {
       self,
       nixpkgs-stable,
       nixpkgs,
@@ -40,53 +40,18 @@
       mac-app-util,
       neovim-nightly-overlay,
       ...
-    }:
+    }@inputs:
+    let
+      mkSystem = import ./lib/mksystem.nix {
+        inherit
+          inputs
+          nixpkgs
+          mac-app-util
+          ;
+      };
+    in
     {
-      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
-      # Build darwin flake using:
-      # $ darwin-rebuild build --flake .
-      # $ darwin-rebuild build --flake .#simple
-      darwinConfigurations.joiedevirve = nix-darwin.lib.darwinSystem {
-        specialArgs = {
-          inherit inputs mac-app-util;
-        };
-        modules = [
-          {
-            # Allow unfree packages.
-            nixpkgs.config.allowUnfree = true;
-          }
-          ./machines/joiedevirve/configuration.nix
-          ./machines/joiedevirve/home.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-          }
-        ];
-      };
-      # there is probably some way to simplify this copy-pasta
-      darwinConfigurations.chatjoyeux = nix-darwin.lib.darwinSystem {
-        specialArgs = {
-          inherit
-            inputs
-            nixpkgs
-            brew-nix
-            nixpkgs-stable
-            mac-app-util
-            neovim-nightly-overlay
-            ;
-        };
-        modules = [
-          # Allow unfree packages.
-          { nixpkgs.config.allowUnfree = true; }
-          ./machines/chatjoyeux/configuration.nix
-          ./machines/chatjoyeux/home.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-          }
-        ];
-      };
+      darwinConfigurations.joiedevirve = mkSystem "joiedevirve";
+      darwinConfigurations.chatjoyeux = mkSystem "chatjoyeux";
     };
 }
