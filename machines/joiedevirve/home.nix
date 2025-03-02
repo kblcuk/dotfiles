@@ -67,7 +67,10 @@ in
           diffutils
           eza
           fd
-          ffmpeg
+          (ffmpeg.override {
+            withFdkAac = true;
+            withUnfree = true;
+          })
           github-cli
           glow
           gnupg
