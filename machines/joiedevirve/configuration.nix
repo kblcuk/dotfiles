@@ -32,7 +32,6 @@
       "bitwarden"
       "brave-browser"
       "imageoptim"
-      "spotify"
       "telegram"
       "wezterm"
       "whisky"

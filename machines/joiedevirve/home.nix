@@ -12,6 +12,7 @@ let
     rev = "38aab5baabefea1bc7e560ba3fbdb53cb91a6186";
     hash = "sha256-bSGGksL/jBNqVV0cHZ8eJ03/8j3HfD9HXpDa8G/Cmi8=";
   };
+  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
 in
 {
   # Auto-link .app to correct location,
@@ -26,6 +27,11 @@ in
   home-manager.users.alex =
     { pkgs, ... }:
     {
+      # The state version is required and should stay at the version you
+      # originally installed.
+      home.stateVersion = "24.05";
+      programs.home-manager.enable = true;
+
       home.file = {
         ".config/fish/themes" = {
           source = "${rose-pine-fish}/themes";
@@ -73,6 +79,18 @@ in
         ]
         ++ (with inputs.nixpkgs.legacyPackages.${pkgs.system}; [ nerd-fonts.jetbrains-mono ]);
 
+      imports = [
+        inputs.spicetify-nix.homeManagerModules.default
+      ];
+
+      programs.spicetify = {
+        enable = true;
+        theme = spicePkgs.themes.ziro;
+        colorScheme = "rose-pine-moon";
+
+        enabledExtensions = with spicePkgs.extensions; [
+          hidePodcasts
+        ];
       };
 
       programs.bat = {
@@ -115,10 +133,6 @@ in
         '';
       };
 
-      # The state version is required and should stay at the version you
-      # originally installed.
-      home.stateVersion = "24.05";
-      programs.home-manager.enable = true;
       programs.git = {
         enable = true;
         userName = "Alexei Mikhailov";
@@ -145,6 +159,8 @@ in
           };
         };
       };
+
     };
+
   home-manager.backupFileExtension = "before-home-manager";
 }
