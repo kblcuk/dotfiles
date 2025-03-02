@@ -81,7 +81,10 @@ in
           starship
           wget
         ]
-        ++ (with inputs.nixpkgs.legacyPackages.${pkgs.system}; [ nerd-fonts.jetbrains-mono ]);
+        ++ (with inputs.nixpkgs.legacyPackages.${pkgs.system}; [
+          nerd-fonts.jetbrains-mono
+          nerd-fonts.hack
+        ]);
 
       imports = [
         inputs.spicetify-nix.homeManagerModules.default
