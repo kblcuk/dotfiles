@@ -12,10 +12,6 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    wezterm = {
-      url = "github:wez/wezterm/main?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
     mac-app-util.url = "github:hraban/mac-app-util";
     brew-nix = {
       url = "github:BatteredBunny/brew-nix";
@@ -35,7 +31,6 @@
       nixpkgs,
       nix-darwin,
       home-manager,
-      wezterm,
       brew-nix,
       mac-app-util,
       neovim-nightly-overlay,

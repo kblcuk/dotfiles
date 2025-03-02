@@ -31,8 +31,8 @@ in
           source = "${rose-pine-fish}/themes";
           recursive = true;
         };
-        ".config/wezterm/lua" = {
-          source = ../../dotfiles/wezterm/lua;
+        ".config/wezterm" = {
+          source = ../../dotfiles/wezterm;
           recursive = true;
         };
         ".config/fish" = {
@@ -73,10 +73,6 @@ in
         ]
         ++ (with inputs.nixpkgs.legacyPackages.${pkgs.system}; [ nerd-fonts.jetbrains-mono ]);
 
-      programs.wezterm = {
-        enable = true;
-        package = inputs.wezterm.packages.${pkgs.system}.default;
-        extraConfig = builtins.readFile ../../dotfiles/wezterm/wezterm.lua;
       };
 
       programs.bat = {
