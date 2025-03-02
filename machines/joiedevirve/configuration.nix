@@ -45,11 +45,11 @@
   };
 
   # Auto upgrade nix package and the daemon service.
-  # nix.package = pkgs.nix;
   services.nix-daemon = {
     logFile = "/var/log/nix-daemon.log";
     enable = true;
   };
+  nix.package = pkgs.nix;
 
   # Necessary for using flakes on this system.
   nix.settings = {
