@@ -53,6 +53,10 @@ in
           source = ../../dotfiles/amethyst;
           recursive = true;
         };
+        ".config/aerospace" = {
+          source = ../../dotfiles/aerospace;
+          recursive = true;
+        };
       };
 
       home.packages =

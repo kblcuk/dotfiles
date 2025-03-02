@@ -27,7 +27,11 @@
 
   homebrew = {
     enable = true;
+    taps = [
+      "nikitabobko/tap"
+    ];
     casks = [
+      "aerospace"
       "amethyst"
       "bitwarden"
       "brave-browser"
@@ -40,8 +44,11 @@
   };
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
+  services.nix-daemon = {
+    logFile = "/var/log/nix-daemon.log";
+    enable = true;
+  };
 
   # Necessary for using flakes on this system.
   nix.settings = {
