@@ -36,6 +36,7 @@
       "bitwarden"
       "brave-browser"
       "imageoptim"
+      "raycast"
       "telegram"
       "wezterm"
       "whisky"
