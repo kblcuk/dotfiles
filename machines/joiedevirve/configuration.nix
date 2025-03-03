@@ -49,7 +49,7 @@
     logFile = "/var/log/nix-daemon.log";
     enable = true;
   };
-  nix.package = pkgs.nix;
+  nix.package = pkgs.nixVersions.latest;
 
   # Necessary for using flakes on this system.
   nix.settings = {
