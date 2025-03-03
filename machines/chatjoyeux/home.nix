@@ -51,6 +51,10 @@ in
           source = ../../dotfiles/amethyst;
           recursive = true;
         };
+        # fish completions for nix command
+        ".config/fish/completions/nix.fish" = {
+          source = "${pkgs.nix}/share/fish/vendor_completions.d/nix.fish";
+        };
       };
 
       home.packages = with pkgs; [
