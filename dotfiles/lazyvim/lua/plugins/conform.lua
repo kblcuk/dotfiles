@@ -20,6 +20,9 @@ return {
 	opts = {
 		formatters_by_ft = {
 			lua = { "stylua" },
+			fish = { "fish_indent" },
+			sh = { "shfmt" },
+			rust = { "rustfmt", lsp_format = "fallback" },
 			-- Conform will run multiple formatters sequentially
 			python = { "black", "pylint", "flake8" },
 			javascript = function(bufnr)
