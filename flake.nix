@@ -46,6 +46,7 @@
           inputs
           nixpkgs
           mac-app-util
+          neovim-nightly-overlay
           ;
       };
     in

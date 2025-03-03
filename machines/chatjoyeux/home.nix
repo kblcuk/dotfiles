@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   mac-app-util,
+  neovim-nightly-overlay,
   ...
 }:
 
@@ -33,8 +34,9 @@ in
           source = "${rose-pine-fish}/themes";
           recursive = true;
         };
-        ".config/wezterm/lua" = {
-          source = ../../dotfiles/wezterm/lua;
+        # wezterm
+        ".config/wezterm" = {
+          source = ../../dotfiles/wezterm;
           recursive = true;
         };
         ".config/fish" = {
@@ -80,6 +82,12 @@ in
         enable = true;
         package = inputs.wezterm.packages.${pkgs.system}.default;
         extraConfig = builtins.readFile ../../dotfiles/wezterm/wezterm.lua;
+      };
+
+      programs.neovim = {
+        enable = true;
+        # package = nixpkgs.legacyPackages.${pkgs.system}.neovim-unwrapped;
+        package = neovim-nightly-overlay.packages.${pkgs.system}.default;
       };
 
       programs.bat = {

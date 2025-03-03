@@ -6,6 +6,7 @@
   nixpkgs,
   inputs,
   mac-app-util,
+  neovim-nightly-overlay,
   ...
 }:
 
@@ -17,6 +18,7 @@ inputs.nix-darwin.lib.darwinSystem {
       inputs
       nixpkgs
       mac-app-util
+      neovim-nightly-overlay
       ;
   };
   modules = [
