@@ -55,6 +55,10 @@ in
         ".config/fish/completions/nix.fish" = {
           source = "${pkgs.nix}/share/fish/vendor_completions.d/nix.fish";
         };
+        ".config/aerospace" = {
+          source = ../../dotfiles/aerospace;
+          recursive = true;
+        };
       };
 
       home.packages = with pkgs; [

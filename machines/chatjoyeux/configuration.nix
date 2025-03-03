@@ -32,10 +32,12 @@
       # but it's unfree, and hella hard to
       # build with all deps on arm macs :/
       "mongodb/brew"
+      "nikitabobko/tap"
     ];
     casks = [
       "amethyst"
       "bitwarden"
+      "aerospace"
       "brave-browser"
       "discord"
       "docker"
