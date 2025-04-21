@@ -1,6 +1,8 @@
 local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+
 local act = wezterm.action
---
+
 local colors_light = require("lua/rose-pine-dawn").colors()
 local window_frame_light = require("lua/rose-pine-dawn").window_frame()
 
@@ -64,28 +66,35 @@ local function window_frame_for_appearance(appearance)
 	end
 end
 
-return {
-	--  nix flake version for some reason thinks
-	-- there is always an update
-	check_for_updates = false,
-	window_background_opacity = 0.95,
-	window_decorations = "RESIZE",
-	scrollback_lines = 9000,
-	colors = colors_for_appearance(get_appearance()),
-	window_frame = window_frame_for_appearance(get_appearance()),
-	keys = {
-		{ key = "Enter", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-		{ key = "Enter", mods = "CMD|CTRL", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-		{ key = "k", mods = "SUPER", action = act.ClearScrollback("ScrollbackAndViewport") },
-		{ key = "h", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-left") },
-		{ key = "j", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-down") },
-		{ key = "k", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-up") },
-		{ key = "l", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-right") },
-		{
-			key = "b",
-			mods = "CTRL",
-			action = act.RotatePanes("CounterClockwise"),
-		},
-		{ key = "n", mods = "CTRL", action = act.RotatePanes("Clockwise") },
+config.adjust_window_size_when_changing_font_size = false
+config.colors = colors_for_appearance(get_appearance())
+
+-- nix flake version for some reason thinks
+-- there is always an update
+config.check_for_updates = false
+config.window_background_opacity = 0.95
+config.window_decorations = "RESIZE"
+config.scrollback_lines = 9000
+config.window_frame = window_frame_for_appearance(get_appearance())
+config.keys = {
+	{ key = "Enter", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "Enter", mods = "CMD|CTRL", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{
+		key = "Enter",
+		mods = "ALT",
+		action = wezterm.action.DisableDefaultAssignment,
 	},
+	{ key = "k", mods = "SUPER", action = act.ClearScrollback("ScrollbackAndViewport") },
+	{ key = "h", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-left") },
+	{ key = "j", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-down") },
+	{ key = "k", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-up") },
+	{ key = "l", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-right") },
+	{
+		key = "b",
+		mods = "CTRL",
+		action = act.RotatePanes("CounterClockwise"),
+	},
+	{ key = "n", mods = "CTRL", action = act.RotatePanes("Clockwise") },
 }
+
+return config
