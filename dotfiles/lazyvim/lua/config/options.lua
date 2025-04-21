@@ -16,18 +16,6 @@ vim.g.lazyvim_picker = "fzf"
 
 vim.g.snacks_animate = false
 
-vim.g.neovide_theme = "auto"
-vim.g.neovide_position_animation_length = 0.1
-vim.g.neovide_cursor_animation_length = 0.04
-vim.g.neovide_cursor_trail_size = 0.22
-vim.g.neovide_cursor_animate_in_insert_mode = true
-vim.g.neovide_cursor_animate_command_line = true
-vim.g.neovide_scroll_animation_far_lines = 1
-vim.g.neovide_scroll_animation_length = 0.15
-vim.g.neovide_transparency = 0.95
-
-vim.o.guifont = "JetBrainsMono Nerd Font:h12"
-
 -- enabling copypasting in neovide
 if vim.g.neovide then
 	vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
@@ -36,6 +24,21 @@ if vim.g.neovide then
 	vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
 	vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
 	vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
+
+	vim.g.neovide_theme = "auto"
+	vim.g.neovide_position_animation_length = 0.02
+	vim.g.neovide_cursor_animation_length = 0.02
+	vim.g.neovide_cursor_short_animation_length = 0.02
+	vim.g.neovide_cursor_trail_size = 0.02
+	vim.g.neovide_cursor_animate_in_insert_mode = true
+	vim.g.neovide_cursor_animate_command_line = true
+	vim.g.neovide_scroll_animation_far_lines = 1
+	vim.g.neovide_scroll_animation_length = 0.02
+	vim.g.neovide_opacity = 0.98
+
+	vim.g.neovide_cursor_vfx_mode = ""
+
+	vim.o.guifont = "JetBrainsMono Nerd Font:h12"
 end
 
 -- Allow clipboard copy paste in neovim
