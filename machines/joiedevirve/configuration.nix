@@ -32,7 +32,6 @@
     ];
     casks = [
       "aerospace"
-      "amethyst"
       "bitwarden"
       "brave-browser"
       "imageoptim"
