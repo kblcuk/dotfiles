@@ -25,37 +25,45 @@ in
     shell = pkgs.fish;
   };
   home-manager.users.alex =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
+    let
+      inherit (config.lib.file) mkOutOfStoreSymlink;
+    in
     {
+      xdg.enable = true;
       # The state version is required and should stay at the version you
       # originally installed.
       home.stateVersion = "24.05";
       programs.home-manager.enable = true;
 
-      home.file = {
-        ".config/fish/themes" = {
+      xdg.configFile."./nushell/config.nu" = {
+        source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/nushell/config.nu";
+      };
+
+      xdg.configFile = {
+        "fish/themes" = {
           source = "${rose-pine-fish}/themes";
           recursive = true;
         };
-        ".config/wezterm" = {
-          source = ../../dotfiles/wezterm;
+        "wezterm" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/wezterm";
           recursive = true;
         };
-        ".config/fish" = {
-          source = ../../dotfiles/fish;
+        "fish" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/fish";
           recursive = true;
         };
-        ".config/lazyvim" = {
-          source = ../../dotfiles/lazyvim;
+        "lazyvim" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/lazyvim";
           recursive = true;
         };
-        ".config/amethyst" = {
-          source = ../../dotfiles/amethyst;
+        "aerospace" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/aerospace";
           recursive = true;
         };
-        ".config/aerospace" = {
-          source = ../../dotfiles/aerospace;
-          recursive = true;
+
+        "starship.toml" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/starship/starship.toml";
         };
       };
 
@@ -81,7 +89,6 @@ in
           pinentry_mac
           ripgrep
           speedtest-cli
-          starship
           wget
         ]
         ++ (with inputs.nixpkgs.legacyPackages.${pkgs.system}; [
@@ -132,6 +139,10 @@ in
 
       programs.zoxide.enable = true;
       programs.zsh.enable = true;
+
+      programs.starship = {
+        enable = true;
+      };
 
       programs.fish = {
         enable = true;
