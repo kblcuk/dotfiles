@@ -1,3 +1,6 @@
+set -g fish_key_bindings fish_vi_key_bindings
+set -U fish_greeting
+
 set -gx EDITOR nvim
 set -gx NVIM_APPNAME lazyvim
 set -gx HOMEBREW_NO_AUTO_UPDATE 1

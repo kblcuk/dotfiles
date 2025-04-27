@@ -131,14 +131,8 @@ in
       programs.fzf.enableFishIntegration = false;
       programs.zsh.enable = true;
 
-      programs.fish = {
+      programs.fish.enable = true;
         enable = true;
-        functions = {
-          fish_greeting = "";
-        };
-        interactiveShellInit = ''
-          fish_vi_key_bindings
-        '';
       };
       programs.starship.enable = true;
 
