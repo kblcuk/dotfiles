@@ -61,6 +61,10 @@ in
           source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/aerospace";
           recursive = true;
         };
+        "neovide" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/neovide";
+          recursive = true;
+        };
 
         "starship.toml" = {
           source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/starship/starship.toml";
