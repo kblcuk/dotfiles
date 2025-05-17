@@ -54,24 +54,10 @@
     ];
   };
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+  # No need to enable nix since this uses determinate nix installer
+  # https://determinate.systems/posts/nix-darwin-updates/#what-you-should-change
+  nix.enable = false;
   nix.package = pkgs.nixVersions.latest;
-
-  # Necessary for using flakes on this system.
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-    substituters = [ "https://wezterm.cachix.org" ];
-    trusted-public-keys = [ "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0=" ];
-    extra-substituters = [ "https://devenv.cachix.org" ];
-    extra-trusted-public-keys = [ "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=" ];
-    trusted-users = [ "@admin" ];
-  };
-  nix.optimise.automatic = true;
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 30d";
-  };
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
