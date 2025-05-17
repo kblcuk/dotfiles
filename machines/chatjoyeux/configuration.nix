@@ -28,30 +28,29 @@
   homebrew = {
     enable = true;
     taps = [
-      # would be nice to use mongodb from devenv,
-      # but it's unfree, and hella hard to
-      # build with all deps on arm macs :/
-      "mongodb/brew"
       "nikitabobko/tap"
-    ];
-    casks = [
-      "amethyst"
-      "bitwarden"
-      "aerospace"
-      "brave-browser"
-      "discord"
-      "docker"
-      "google-cloud-sdk"
-      "imageoptim"
-      "slack"
-      "spotify"
-      "telegram"
-      "whisky"
-      "zoom"
+      "mongodb/brew"
+      "redis-stack/redis-stack"
     ];
     brews = [
-      "mongodb-community@7.0"
+      "mongodb-community@8.0"
     ];
+    casks = [
+      "aerospace"
+      "bitwarden"
+      "brave-browser"
+      "discord"
+      "google-cloud-sdk"
+      "imageoptim"
+      "mongodb-compass"
+      "redis-insight"
+      "redis-stack-server"
+      "slack"
+      "telegram"
+      "wezterm"
+      "zoom"
+    ];
+    # onActivation.cleanup = "uninstall";
   };
 
   # No need to enable nix since this uses determinate nix installer
