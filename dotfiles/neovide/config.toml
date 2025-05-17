@@ -1,2 +1,14 @@
 frame = "transparent"
 
+[font]
+size = 12
+family = "JetBrainsMono Nerd Font Mono"
+hinting = "full"
+
+[[font.normal]]
+family = "JetBrainsMono Nerd Font Mono"
+style = "W300"
+
+[[font.bold]]
+family = "JetBrainsMono Nerd Font Mono"
+style = "W400"

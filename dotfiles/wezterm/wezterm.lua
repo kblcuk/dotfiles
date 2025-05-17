@@ -66,6 +66,9 @@ local function window_frame_for_appearance(appearance)
 	end
 end
 
+config.front_end = "OpenGL"
+config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Medium" })
+
 config.adjust_window_size_when_changing_font_size = false
 config.colors = colors_for_appearance(get_appearance())
 
