@@ -16,6 +16,10 @@ vim.g.lazyvim_picker = "fzf"
 
 vim.g.snacks_animate = false
 
+-- For some reason this is disabled even though
+-- docs say it should be enabled
+vim.g.editorconfig = true
+
 -- enabling copypasting in neovide
 if vim.g.neovide then
 	vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
