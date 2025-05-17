@@ -27,36 +27,41 @@ in
     shell = pkgs.fish;
   };
   home-manager.users.alex =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
-      home.file = {
+      xdg.enable = true;
+      # Could be xdg.configDir, but then we can't link
+      # our dot files since they become out of store, and
+      # building complains about it. But I don't care about
+      # having reproducible dotfiles, I want them to be easily
+      # tweakable (and we still can commit them to git once
+      # they are done)
+      home.file = with config.lib.file; {
         ".config/fish/themes" = {
           source = "${rose-pine-fish}/themes";
           recursive = true;
         };
-        # wezterm
-        ".config/wezterm" = {
-          source = ../../dotfiles/wezterm;
+        ".config/fish/conf.d" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/fish/conf.d";
           recursive = true;
         };
-        ".config/fish" = {
-          source = ../../dotfiles/fish;
+        ".config/wezterm" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/wezterm";
           recursive = true;
         };
         ".config/lazyvim" = {
-          source = ../../dotfiles/lazyvim;
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/lazyvim";
           recursive = true;
         };
-        ".config/amethyst" = {
-          source = ../../dotfiles/amethyst;
+        ".config/neovide" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/neovide";
           recursive = true;
         };
-        # fish completions for nix command
-        ".config/fish/completions/nix.fish" = {
-          source = "${pkgs.nix}/share/fish/vendor_completions.d/nix.fish";
+        ".config/starship.toml" = {
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/starship/starship.toml";
         };
         ".config/aerospace" = {
-          source = ../../dotfiles/aerospace;
+          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/aerospace";
           recursive = true;
         };
       };
