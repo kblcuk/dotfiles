@@ -25,6 +25,7 @@
   environment.pathsToLink = [ "/share/fish" ];
   networking.hostName = "joiedevirve";
 
+  system.primaryUser = "alex";
   homebrew = {
     enable = true;
     taps = [
@@ -79,7 +80,7 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   # touch id for sudo
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   system.defaults = {
     # finder.AppleShowAllExtensions = true;

@@ -24,6 +24,7 @@
   ];
   environment.pathsToLink = [ "/share/fish" ];
   networking.hostName = "chatjoyeux";
+  system.primaryUser = "alex";
 
   homebrew = {
     enable = true;
@@ -74,7 +75,7 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   # touch id for sudo
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   system.defaults = {
     # finder.AppleShowAllExtensions = true;
