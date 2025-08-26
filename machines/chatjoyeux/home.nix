@@ -1,152 +1,22 @@
 {
-  inputs,
-  pkgs,
-  mac-app-util,
-  neovim-nightly-overlay,
+  nixpkgs,
   ...
 }:
-
-let
-  rose-pine-fish = pkgs.fetchFromGitHub {
-    owner = "rose-pine";
-    repo = "fish";
-    rev = "38aab5baabefea1bc7e560ba3fbdb53cb91a6186";
-    hash = "sha256-bSGGksL/jBNqVV0cHZ8eJ03/8j3HfD9HXpDa8G/Cmi8=";
-  };
-in
 {
-  # Auto-link .app to correct location,
-  # so spotlight finds them
-  home-manager.sharedModules = [
-    mac-app-util.homeManagerModules.default
+  imports = [
+    ../../common/base-home.nix
   ];
 
-  users.users.alex = {
-    name = "alex";
-    home = "/Users/alex";
-    shell = pkgs.fish;
-  };
   home-manager.users.alex =
     { config, pkgs, ... }:
     {
-      xdg.enable = true;
-      # Could be xdg.configDir, but then we can't link
-      # our dot files since they become out of store, and
-      # building complains about it. But I don't care about
-      # having reproducible dotfiles, I want them to be easily
-      # tweakable (and we still can commit them to git once
-      # they are done)
-      home.file = with config.lib.file; {
-        ".config/fish/themes" = {
-          source = "${rose-pine-fish}/themes";
-          recursive = true;
-        };
-        ".config/fish/conf.d" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/fish/conf.d";
-          recursive = true;
-        };
-        ".config/wezterm" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/wezterm";
-          recursive = true;
-        };
-        ".config/lazyvim" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/lazyvim";
-          recursive = true;
-        };
-        ".config/neovide" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/neovide";
-          recursive = true;
-        };
-        ".config/starship.toml" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/starship/starship.toml";
-        };
-        ".config/aerospace" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/aerospace";
-          recursive = true;
-        };
-      };
+      # Add machine-specific packages to base packages
+      home.packages = import ./packages.nix { inherit pkgs nixpkgs; };
 
-      home.packages = with pkgs; [
-        nerd-fonts.jetbrains-mono
-        cachix
-        gnupg
-        bat
-        httpie
-        neovim
-        neovide
-        ripgrep
-        coreutils
-        fd
-        eza
-        delta
-        lazygit
-        glow
-        pinentry_mac
-        pinentry-curses
-        github-cli
-        speedtest-cli
-        kubernetes-helm
-        kubectl
-        sops
-        age
-      ];
-
-      programs.wezterm = {
-        enable = true;
-        package = inputs.wezterm.packages.${pkgs.system}.default;
-        extraConfig = builtins.readFile ../../dotfiles/wezterm/wezterm.lua;
-      };
-
-      programs.neovim = {
-        enable = true;
-        # package = nixpkgs.legacyPackages.${pkgs.system}.neovim-unwrapped;
-        package = neovim-nightly-overlay.packages.${pkgs.system}.default;
-      };
-
-      programs.bat = {
-        enable = true;
-        extraPackages = [ pkgs.bat-extras.batman ];
-        config = {
-          theme = "rose-pine-dawn";
-        };
-        themes = {
-          rose-pine-dawn = {
-            src = pkgs.fetchFromGitHub {
-              owner = "rose-pine";
-              repo = "tm-theme"; # Bat uses sublime syntax for its themes
-              rev = "c4235f9a65fd180ac0f5e4396e3a86e21a0884ec";
-              sha256 = null;
-            };
-            file = "dist/themes/rose-pine-dawn.tmTheme";
-          };
-          rose-pine-moon = {
-            src = pkgs.fetchFromGitHub {
-              owner = "rose-pine";
-              repo = "tm-theme"; # Bat uses sublime syntax for its themes
-              rev = "c4235f9a65fd180ac0f5e4396e3a86e21a0884ec";
-              sha256 = null;
-            };
-            file = "dist/themes/rose-pine-moon.tmTheme";
-          };
-        };
-      };
-
-      programs.zoxide.enable = true;
-      programs.fzf.enable = true;
-      programs.fzf.enableFishIntegration = false;
-      programs.zsh.enable = true;
-
-      programs.fish.enable = true;
-        enable = true;
-      };
-      programs.starship.enable = true;
-
-      # The state version is required and should stay at the version you
-      # originally installed.
-      home.stateVersion = "24.05";
-      programs.home-manager.enable = true;
       programs.git = {
         enable = true;
+        lfs.enable = true;
+        ignores = import ./gitignore_global.nix;
         userName = "Alexei Mikhailov";
         userEmail = "alexei.mikhailov@socialfirstgames.com";
         signing = {
@@ -155,22 +25,14 @@ in
         };
         delta = {
           enable = true;
-          options = {
-            navigate = true;
-          };
+          options.navigate = true;
         };
         extraConfig = {
-          merge = {
-            conflictstyle = "diff3";
-          };
-          pull = {
-            rebase = true;
-          };
-          diff = {
-            colorMoved = "default";
-          };
+          merge.conflictstyle = "diff3";
+          pull.rebase = true;
+          diff.colorMoved = "default";
+          core.autocrlf = false;
         };
       };
     };
-  home-manager.backupFileExtension = "before-home-manager";
 }

@@ -1,150 +1,22 @@
 {
-  inputs,
-  pkgs,
-  mac-app-util,
+  nixpkgs,
   ...
 }:
-
-let
-  rose-pine-fish = pkgs.fetchFromGitHub {
-    owner = "rose-pine";
-    repo = "fish";
-    rev = "38aab5baabefea1bc7e560ba3fbdb53cb91a6186";
-    hash = "sha256-bSGGksL/jBNqVV0cHZ8eJ03/8j3HfD9HXpDa8G/Cmi8=";
-  };
-in
 {
-  # Auto-link .app to correct location,
-  # so spotlight finds them
-  home-manager.sharedModules = [ mac-app-util.homeManagerModules.default ];
+  imports = [
+    ../../common/base-home.nix
+  ];
 
-  users.users.alex = {
-    name = "alex";
-    home = "/Users/alex";
-    shell = pkgs.fish;
-  };
   home-manager.users.alex =
     { config, pkgs, ... }:
-    let
-      inherit (config.lib.file) mkOutOfStoreSymlink;
-    in
     {
-      xdg.enable = true;
-      # The state version is required and should stay at the version you
-      # originally installed.
-      home.stateVersion = "24.05";
-      programs.home-manager.enable = true;
-
-      xdg.configFile."./nushell/config.nu" = {
-        source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/nushell/config.nu";
-      };
-
-      xdg.configFile = {
-        "fish/themes" = {
-          source = "${rose-pine-fish}/themes";
-          recursive = true;
-        };
-        "wezterm" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/wezterm";
-          recursive = true;
-        };
-        "fish" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/fish";
-          recursive = true;
-        };
-        "lazyvim" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/lazyvim";
-          recursive = true;
-        };
-        "aerospace" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/aerospace";
-          recursive = true;
-        };
-        "neovide" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/neovide";
-          recursive = true;
-        };
-
-        "starship.toml" = {
-          source = mkOutOfStoreSymlink "${config.home.homeDirectory}/Code/dotfiles/dotfiles/starship/starship.toml";
-        };
-      };
-
-      home.packages =
-        with pkgs;
-        [
-          aria2
-          coreutils
-          diffutils
-          eza
-          fd
-          (ffmpeg.override {
-            withFdkAac = true;
-            withUnfree = true;
-          })
-          github-cli
-          glow
-          gnupg
-          httpie
-          lazygit
-          neovim
-          pinentry-curses
-          pinentry_mac
-          ripgrep
-          speedtest-cli
-          wget
-        ]
-        ++ (with inputs.nixpkgs.legacyPackages.${pkgs.system}; [
-          nerd-fonts.jetbrains-mono
-          nerd-fonts.hack
-        ]);
-
-      programs.bat = {
-        enable = true;
-        config = {
-          theme = "rose-pine-dawn";
-        };
-        themes = {
-          rose-pine-dawn = {
-            src = pkgs.fetchFromGitHub {
-              owner = "rose-pine";
-              repo = "tm-theme"; # Bat uses sublime syntax for its themes
-              rev = "c4235f9a65fd180ac0f5e4396e3a86e21a0884ec";
-              sha256 = null;
-            };
-            file = "dist/themes/rose-pine-dawn.tmTheme";
-          };
-          rose-pine-moon = {
-            src = pkgs.fetchFromGitHub {
-              owner = "rose-pine";
-              repo = "tm-theme"; # Bat uses sublime syntax for its themes
-              rev = "c4235f9a65fd180ac0f5e4396e3a86e21a0884ec";
-              sha256 = null;
-            };
-            file = "dist/themes/rose-pine-moon.tmTheme";
-          };
-        };
-      };
-
-      programs.zoxide.enable = true;
-      programs.zsh.enable = true;
-
-      programs.starship = {
-        enable = true;
-      };
-
-      programs.fish = {
-        enable = true;
-        functions = {
-          fish_greeting = "";
-        };
-        interactiveShellInit = ''
-          fish_vi_key_bindings
-        '';
-      };
+      # Add machine-specific packages to base packages
+      home.packages = import ./packages.nix { inherit pkgs nixpkgs; };
 
       programs.git = {
         enable = true;
+        lfs.enable = true;
+        ignores = import ../chatjoyeux/gitignore_global.nix;
         userName = "Alexei Mikhailov";
         userEmail = "kblcuk@pm.me";
         signing = {
@@ -153,24 +25,14 @@ in
         };
         delta = {
           enable = true;
-          options = {
-            navigate = true;
-          };
+          options.navigate = true;
         };
         extraConfig = {
-          merge = {
-            conflictstyle = "diff3";
-          };
-          pull = {
-            rebase = true;
-          };
-          diff = {
-            colorMoved = "default";
-          };
+          merge.conflictstyle = "diff3";
+          pull.rebase = true;
+          diff.colorMoved = "default";
+          core.autocrlf = false;
         };
       };
-
     };
-
-  home-manager.backupFileExtension = "before-home-manager";
 }
