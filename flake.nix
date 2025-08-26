@@ -14,10 +14,6 @@
     };
     mac-app-util.url = "github:hraban/mac-app-util";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
