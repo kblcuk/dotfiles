@@ -44,11 +44,14 @@
       "google-cloud-sdk"
       "imageoptim"
       "mongodb-compass"
+      "raycast"
       "redis-insight"
       "redis-stack-server"
       "slack"
       "telegram"
       "wezterm"
+      "zed"
+      "zen"
       "zoom"
     ];
     # onActivation.cleanup = "uninstall";
