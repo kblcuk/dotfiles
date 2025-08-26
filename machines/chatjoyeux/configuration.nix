@@ -34,7 +34,7 @@
       "redis-stack/redis-stack"
     ];
     brews = [
-      "mongodb-community@8.0"
+      "mongodb-community@8.2"
     ];
     casks = [
       "aerospace"

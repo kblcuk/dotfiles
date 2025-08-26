@@ -12,7 +12,6 @@ let
     rev = "38aab5baabefea1bc7e560ba3fbdb53cb91a6186";
     hash = "sha256-bSGGksL/jBNqVV0cHZ8eJ03/8j3HfD9HXpDa8G/Cmi8=";
   };
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
 in
 {
   # Auto-link .app to correct location,
@@ -99,20 +98,6 @@ in
           nerd-fonts.jetbrains-mono
           nerd-fonts.hack
         ]);
-
-      imports = [
-        inputs.spicetify-nix.homeManagerModules.default
-      ];
-
-      programs.spicetify = {
-        enable = true;
-        theme = spicePkgs.themes.ziro;
-        colorScheme = "rose-pine-moon";
-
-        enabledExtensions = with spicePkgs.extensions; [
-          hidePodcasts
-        ];
-      };
 
       programs.bat = {
         enable = true;
