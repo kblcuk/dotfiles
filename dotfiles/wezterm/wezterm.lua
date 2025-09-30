@@ -82,22 +82,14 @@ config.window_frame = window_frame_for_appearance(get_appearance())
 config.keys = {
 	{ key = "Enter", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "Enter", mods = "CMD|CTRL", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{
-		key = "Enter",
-		mods = "ALT",
-		action = wezterm.action.DisableDefaultAssignment,
-	},
+	{ key = "Enter", mods = "ALT", action = wezterm.action.DisableDefaultAssignment },
 	{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
 	{ key = "k", mods = "SUPER", action = act.ClearScrollback("ScrollbackAndViewport") },
 	{ key = "h", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-left") },
 	{ key = "j", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-down") },
 	{ key = "k", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-up") },
 	{ key = "l", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-right") },
-	{
-		key = "b",
-		mods = "CTRL",
-		action = act.RotatePanes("CounterClockwise"),
-	},
+	{ key = "b", mods = "CTRL", action = act.RotatePanes("CounterClockwise") },
 	{ key = "n", mods = "CTRL", action = act.RotatePanes("Clockwise") },
 }
 
