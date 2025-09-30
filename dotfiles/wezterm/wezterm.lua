@@ -87,6 +87,7 @@ config.keys = {
 		mods = "ALT",
 		action = wezterm.action.DisableDefaultAssignment,
 	},
+	{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
 	{ key = "k", mods = "SUPER", action = act.ClearScrollback("ScrollbackAndViewport") },
 	{ key = "h", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-left") },
 	{ key = "j", mods = "CTRL", action = act.EmitEvent("ActivatePaneDirection-down") },
