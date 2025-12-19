@@ -19,15 +19,13 @@ vim.g.snacks_animate = false
 -- docs say it should be enabled
 vim.g.editorconfig = true
 
--- enabling copypasting in neovide
-if vim.g.neovide then
-	vim.keymap.set("n", "<D-s>", ":w<CR>") -- Save
-	vim.keymap.set("v", "<D-c>", '"+y') -- Copy
-	vim.keymap.set("n", "<D-v>", '"+P') -- Paste normal mode
-	vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
-	vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
-	vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
 
+-- Allow clipboard copy paste in neovim
+vim.keymap.set({ "n", "v", "s", "x", "o", "i", "l", "c", "t" }, "<D-v>", function()
+	vim.api.nvim_paste(vim.fn.getreg("+"), true, -1)
+end, { noremap = true, silent = true })
+
+if vim.g.neovide then
 	vim.g.neovide_theme = "auto"
 	vim.g.neovide_position_animation_length = 0.02
 	vim.g.neovide_cursor_animation_length = 0.02
