@@ -11,7 +11,7 @@
     ];
     casks = [
       "discord"
-      "google-cloud-sdk"
+      "gcloud-cli"
       "mongodb-compass"
       "redis-insight"
       "redis-stack-server"
