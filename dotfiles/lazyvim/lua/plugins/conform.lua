@@ -40,6 +40,9 @@ return {
 			vue = function(bufnr)
 				return { first(bufnr, "eslint_d", "eslint"), first(bufnr, "prettierd", "prettier") }
 			end,
+			toml = function(bufnr)
+				return { first(bufnr, "prettierd", "prettier") }
+			end,
 			["*"] = { "trim_whitespace" },
 		},
 	},
