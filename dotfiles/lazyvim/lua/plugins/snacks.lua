@@ -1,5 +1,5 @@
 return {
-	"snacks.nvim",
+	"folke/snacks.nvim",
 	opts = {
 		-- disable indent guidelines, since they are always 2-space,
 		-- and make little sense when 4-space indents are used
