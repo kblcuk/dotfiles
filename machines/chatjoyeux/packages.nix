@@ -5,7 +5,6 @@ with pkgs;
 [
   # Development tools
   awscli2
-  claude-code
   colima
   docker
   docker-credential-helpers
