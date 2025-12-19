@@ -1,7 +1,18 @@
 {
+  pkgs,
   nixpkgs,
+  inputs,
   ...
 }:
+
+let
+  delta_themes = pkgs.fetchFromGitHub {
+    owner = "dandavison";
+    repo = "delta";
+    rev = "acd758f7a08df6c2ac5542a2c5a4034c664a9ed8";
+    hash = "sha256-L9m5/o1I6Z5U8YdqaXsFVT3X+xvWafiz79IEAnUSLrk=";
+  };
+in
 {
   imports = [
     ../../common/base-home.nix
@@ -25,14 +36,32 @@
         };
         delta = {
           enable = true;
-          options.navigate = true;
+          options = {
+            features = "mellow-barbet";
+            navigate = true;
+          };
         };
         extraConfig = {
           merge.conflictstyle = "diff3";
           pull.rebase = true;
           diff.colorMoved = "default";
           core.autocrlf = false;
+          include = {
+            path = "${delta_themes}/themes.gitconfig";
+          };
+
         };
       };
+
+      # could do when we get to 25.11
+      # programs.delta = {
+      #   enable = true;
+      #   enableGitIntegration = true;
+      #   features = "rose-pine-moon"
+      #;
+      #   navigate = true;
+      #
+      # };
+
     };
 }
