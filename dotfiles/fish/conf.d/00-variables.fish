@@ -6,6 +6,8 @@ set -gx NVIM_APPNAME lazyvim
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
 # TF ENV uses amd64 by default, which might not be default
 set -gx TFENV_ARCH (uname -m)
+set -gx DOTNET_ROOT "/opt/homebrew/opt/dotnet@8/libexec"
+set -gx ANDROID_HOME "$HOME/Library/Android/sdk"
 
 set -gx GPG_TTY (tty)
 # to fix eza and fd color output
