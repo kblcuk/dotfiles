@@ -6,7 +6,9 @@
     taps = [
       "nikitabobko/tap"
     ];
-    brews = [ ];
+    brews = [
+      "gmp" # for mise-en-place ruby
+    ];
     casks = [
       "aerospace"
       "bitwarden"
