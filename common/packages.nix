@@ -16,6 +16,9 @@ with pkgs;
   ripgrep
   speedtest-cli
 ]
+++ (with pkgs.fishPlugins; [
+  pure
+])
 ++ (with nixpkgs.legacyPackages.${pkgs.system}; [
   github-cli
   nerd-fonts.jetbrains-mono

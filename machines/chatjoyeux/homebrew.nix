@@ -1,4 +1,4 @@
-{ _ }:
+{ ... }:
 {
   # Additional homebrew packages specific to chatjoyeux (development machine)
   homebrew = {
@@ -8,9 +8,9 @@
     ];
     brews = [
       "mongodb-community@8.2"
-      "claude-code"
     ];
     casks = [
+      "claude-code"
       "discord"
       "gcloud-cli"
       "mongodb-compass"

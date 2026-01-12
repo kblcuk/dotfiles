@@ -24,44 +24,44 @@ in
       # Add machine-specific packages to base packages
       home.packages = import ./packages.nix { inherit pkgs nixpkgs; };
 
-      programs.git = {
-        enable = true;
-        lfs.enable = true;
-        ignores = import ./gitignore_global.nix;
-        userName = "Alexei Mikhailov";
-        userEmail = "alexei.mikhailov@socialfirstgames.com";
-        signing = {
-          key = "A3CFF99E76AC8F54";
-          signByDefault = true;
+      programs = {
+        git = {
+          enable = true;
+          lfs.enable = true;
+          ignores = import ./gitignore_global.nix;
+          settings = {
+            user = {
+              email = "alexei.mikhailov@socialfirstgames.com";
+              name = "Alexei Mikhailov";
+            };
+            merge.conflictstyle = "diff3";
+            pull.rebase = true;
+            diff.colorMoved = "default";
+            core.autocrlf = false;
+            include = {
+              path = "${delta_themes}/themes.gitconfig";
+            };
+
+          };
+          signing = {
+            key = "A3CFF99E76AC8F54";
+            signByDefault = true;
+          };
         };
+
         delta = {
           enable = true;
+          enableGitIntegration = true;
           options = {
-            features = "mellow-barbet";
             navigate = true;
+            features = "mellow-barbet";
           };
         };
-        extraConfig = {
-          merge.conflictstyle = "diff3";
-          pull.rebase = true;
-          diff.colorMoved = "default";
-          core.autocrlf = false;
-          include = {
-            path = "${delta_themes}/themes.gitconfig";
-          };
 
+        mise = {
+          enable = true;
+          package = inputs.nixpkgs.legacyPackages.${pkgs.system}.mise;
         };
       };
-
-      # could do when we get to 25.11
-      # programs.delta = {
-      #   enable = true;
-      #   enableGitIntegration = true;
-      #   features = "rose-pine-moon"
-      #;
-      #   navigate = true;
-      #
-      # };
-
     };
 }

@@ -1,7 +1,6 @@
 {
   pkgs,
   nixpkgs,
-  mac-app-util,
   ...
 }:
 
@@ -14,9 +13,6 @@ let
   };
 in
 {
-  # Auto-link .app to correct location,
-  # so spotlight finds them
-  home-manager.sharedModules = [ mac-app-util.homeManagerModules.default ];
 
   users.users.alex = {
     name = "alex";
@@ -102,11 +98,12 @@ in
 
       programs.zoxide.enable = true;
       programs.fzf.enable = true;
-      programs.fzf.enableFishIntegration = false;
+      programs.fzf.enableFishIntegration = true;
       programs.zsh.enable = true;
 
-      programs.fish.enable = true;
-      programs.starship.enable = true;
+      programs.fish = {
+        enable = true;
+      };
 
       programs.home-manager.enable = true;
 

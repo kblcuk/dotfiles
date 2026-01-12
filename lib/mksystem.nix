@@ -5,7 +5,6 @@
 {
   nixpkgs,
   inputs,
-  mac-app-util,
   neovim-nightly-overlay,
   ...
 }:
@@ -17,7 +16,6 @@ inputs.nix-darwin.lib.darwinSystem {
     inherit
       inputs
       nixpkgs
-      mac-app-util
       neovim-nightly-overlay
       ;
   };
