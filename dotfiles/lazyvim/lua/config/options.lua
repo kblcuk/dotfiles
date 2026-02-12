@@ -9,7 +9,7 @@ local opt = vim.opt
 opt.number = false
 opt.relativenumber = false
 opt.list = false
-opt.shell = "/bin/bash"
+opt.shell = "/bin/zsh"
 
 vim.g.lazyvim_python_ruff = "ruff"
 
@@ -18,7 +18,6 @@ vim.g.snacks_animate = false
 -- For some reason this is disabled even though
 -- docs say it should be enabled
 vim.g.editorconfig = true
-
 
 -- Allow clipboard copy paste in neovim
 vim.keymap.set({ "n", "v", "s", "x", "o", "i", "l", "c", "t" }, "<D-v>", function()
