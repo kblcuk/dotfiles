@@ -5,10 +5,6 @@ with pkgs;
 [
   aria2
   diffutils
-  (ffmpeg.override {
-    withFdkAac = true;
-    withUnfree = true;
-  })
   wget
 ]
 ++ (with nixpkgs.legacyPackages.${pkgs.system}; [
