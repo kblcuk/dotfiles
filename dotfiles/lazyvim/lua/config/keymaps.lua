@@ -12,4 +12,4 @@ vim.keymap.set("i", "jk", "<ESC>", { silent = true })
 --
 -- fugitive
 -- vim.keymap.set("n", "<Leader>gg", "<cmd>Git<CR>", { silent = true })
-vim.keymap.set("n", "<Leader>gg", "<cmd>Neogit kind=split<CR>", { silent = true })
+-- vim.keymap.set("n", "<Leader>gg", "<cmd>Neogit kind=split<CR>", { silent = true })
