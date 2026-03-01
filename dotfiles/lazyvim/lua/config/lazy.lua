@@ -35,8 +35,6 @@ require("lazy").setup({
 		{ import = "lazyvim.plugins.extras.formatting.prettier" },
 		{ import = "lazyvim.plugins.extras.editor.snacks_explorer" },
 		{ import = "lazyvim.plugins.extras.editor.snacks_picker" },
-		{ import = "lazyvim.plugins.extras.ai.copilot" },
-		{ import = "lazyvim.plugins.extras.ai.copilot-chat" },
 		{ import = "lazyvim.plugins.extras.util.dot" },
 		-- { import = "lazyvim.plugins.extras.ui.mini-animate" },
 		-- import/override with your plugins
