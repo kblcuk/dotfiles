@@ -8,8 +8,14 @@
       "ffmpeg"
     ];
     casks = [
+      "heroic"
       "imageoptim"
-      "whisky"
+      "keycastr"
+      "neovide-app"
+      "obsidian"
+      "steam"
+      "vlc"
+      "zed"
       "zoom"
     ];
   };
