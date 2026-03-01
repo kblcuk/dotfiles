@@ -23,25 +23,25 @@ return {
 			fish = { "fish_indent" },
 			sh = { "shfmt" },
 			rust = { "rustfmt", lsp_format = "fallback" },
-			-- Conform will run multiple formatters sequentially
-			python = { "black", "pylint", "flake8" },
+			python = { "ruff" },
 			javascript = function(bufnr)
-				return { first(bufnr, "eslint_d", "eslint"), first(bufnr, "prettierd", "prettier") }
+				return { first(bufnr, "oxfmt", "prettierd", "prettier") }
 			end,
 			css = function(bufnr)
-				return { first(bufnr, "prettierd", "prettier") }
+				return { first(bufnr, "oxfmt", "prettierd", "prettier") }
 			end,
 			typescript = function(bufnr)
-				return { first(bufnr, "eslint_d", "eslint"), first(bufnr, "prettierd", "prettier") }
+				return { first(bufnr, "oxfmt", "prettierd", "prettier") }
 			end,
 			typescriptreact = function(bufnr)
-				return { first(bufnr, "eslint_d", "eslint"), first(bufnr, "prettierd", "prettier") }
+				return { first(bufnr, "oxfmt", "prettierd", "prettier") }
 			end,
 			vue = function(bufnr)
-				return { first(bufnr, "eslint_d", "eslint"), first(bufnr, "prettierd", "prettier") }
+				return { first(bufnr, "oxfmt", "prettierd", "prettier") }
 			end,
+			json = { "oxfmt" },
 			toml = function(bufnr)
-				return { first(bufnr, "prettierd", "prettier") }
+				return { first(bufnr, "oxfmt", "prettierd", "prettier") }
 			end,
 			["*"] = { "trim_whitespace" },
 		},
