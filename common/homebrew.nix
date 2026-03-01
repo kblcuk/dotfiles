@@ -8,6 +8,7 @@
     ];
     brews = [
       "gmp" # for mise-en-place ruby
+      "cormacrelf/tap/dark-notify"
     ];
     casks = [
       "aerospace"

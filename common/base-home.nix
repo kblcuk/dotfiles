@@ -107,6 +107,22 @@ in
 
       programs.home-manager.enable = true;
 
+      launchd.agents.dark-notify = {
+        enable = true;
+        config = {
+          ProgramArguments = [
+            # "${pkgs.dark-notify}/bin/dark-notify"
+            "/opt/homebrew/bin/dark-notify"
+            "-c"
+            # dark-notify passes the appearance as argv[1]; it does not
+            # interpolate placeholders like %@ into the command string.
+            "${pkgs.fish}/bin/fish -c 'set -Ux background_mode $argv[1]'"
+          ];
+          KeepAlive = true;
+          RunAtLoad = true;
+        };
+      };
+
       programs.gpg = {
         enable = true;
       };
