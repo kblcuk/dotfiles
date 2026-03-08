@@ -98,12 +98,19 @@ in
 
       programs.zoxide.enable = true;
       programs.fzf.enable = true;
-      programs.fzf.enableFishIntegration = true;
-      programs.zsh.enable = true;
 
-      programs.fish = {
+      programs.fzf.enableFishIntegration = true;
+      programs.zsh = {
         enable = true;
+        defaultKeymap = "vicmd";
+        autosuggestion.enable = true;
+        syntaxHighlighting.enable = true;
+        envExtra = ''
+          eval "$(mise activate zsh --shims)"
+        '';
       };
+
+      programs.fish.enable = true;
 
       programs.home-manager.enable = true;
 
