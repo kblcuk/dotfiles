@@ -20,8 +20,21 @@ inputs.nix-darwin.lib.darwinSystem {
       ;
   };
   modules = [
-    # Allow unfree packages.
-    { nixpkgs.config.allowUnfree = true; }
+    {
+      nixpkgs.config.allowUnfree = true;
+      nixpkgs.overlays = [
+        (
+          _final: prev:
+          let
+            unstable = nixpkgs.legacyPackages.${prev.system};
+          in
+          {
+            fish = unstable.fish;
+            fishPlugins = unstable.fishPlugins;
+          }
+        )
+      ];
+    }
     ../machines/${name}/configuration.nix
     ../machines/${name}/home.nix
     inputs.home-manager.darwinModules.home-manager
