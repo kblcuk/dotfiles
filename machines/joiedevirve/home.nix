@@ -28,7 +28,7 @@ in
         git = {
           enable = true;
           lfs.enable = true;
-          ignores = import ../chatjoyeux/gitignore_global.nix;
+          ignores = import ../../common/git.nix;
           settings = {
             user = {
               name = "Alexei Mikhailov";
