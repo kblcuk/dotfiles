@@ -38,10 +38,15 @@ in
             pull.rebase = true;
             diff.colorMoved = "default";
             core.autocrlf = false;
-            include = {
-              path = "${delta_themes}/themes.gitconfig";
-            };
           };
+          includes = [
+            { path = "${delta_themes}/themes.gitconfig"; }
+            {
+              condition = "gitdir:~/Code/mot.tech/";
+              path = "~/Code/mot.tech/.gitconfig";
+            }
+          ];
+
           signing = {
             key = "A983E913138CD12E";
             signByDefault = true;
