@@ -1,8 +1,15 @@
-{ pkgs, ... }:
-{
+_: {
   # Base homebrew configuration
   homebrew = {
     enable = true;
+    # Should land in 26.05
+    # enableFishIntegration = true;
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      # Should land in 26.05
+      # cleanup = "check";
+    };
     taps = [
       "nikitabobko/tap"
     ];
