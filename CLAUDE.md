@@ -23,10 +23,10 @@ nix run nix-darwin -- switch --flake .
 nix flake update && darwin-rebuild switch --flake .
 
 # Rebuild system without updating inputs
-darwin-rebuild switch --flake .
+sudo darwin-rebuild switch
 
 # Check system configuration
-darwin-rebuild check --flake .
+darwin-rebuild check
 ```
 
 ### Formatting
@@ -37,9 +37,10 @@ nixfmt **/*.nix
 
 ## Machine Configuration Structure
 
-Currently supports two machines:
-- `joiedevirve`: Minimal configuration
-- `chatjoyeux`: Full development setup with homebrew packages
+Currently supports one machine:
+- `joiedevirve`: Full development setup with homebrew packages
+
+Potentially could have more.
 
 ### Adding a New Machine
 1. Create directory in `machines/<machine-name>/`
