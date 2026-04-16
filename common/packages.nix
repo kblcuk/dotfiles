@@ -23,4 +23,5 @@ with pkgs;
   github-cli
   nerd-fonts.jetbrains-mono
   neovim
+  neovide
 ])

@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   # Additional homebrew packages specific to joiedevirve
   homebrew = {
     brews = [
@@ -11,7 +10,6 @@
       "heroic"
       "imageoptim"
       "keycastr"
-      "neovide-app"
       "obsidian"
       "steam"
       "vlc"
