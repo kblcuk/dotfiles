@@ -36,6 +36,7 @@ in
             };
             merge.conflictstyle = "diff3";
             pull.rebase = true;
+            push.autoSetupRemote = true;
             diff.colorMoved = "default";
             core.autocrlf = false;
           };
