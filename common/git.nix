@@ -25,4 +25,8 @@
   "Network Trash Folder"
   "Temporary Items"
   ".apdisk"
+
+  # AI local settings
+  ".claude/"
+  ".codex/"
 ]
