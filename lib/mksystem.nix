@@ -31,6 +31,17 @@ inputs.nix-darwin.lib.darwinSystem {
           {
             fish = unstable.fish;
             fishPlugins = unstable.fishPlugins;
+
+            # direnv's test-fish hangs on darwin with fish 4.6.0 from unstable.
+            # Skip that specific test until upstream fixes it.
+            # https://github.com/NixOS/nixpkgs/issues/507531
+            direnv = prev.direnv.overrideAttrs (oldAttrs: {
+              checkPhase = ''
+                runHook preCheck
+                make test-go test-bash test-zsh
+                runHook postCheck
+              '';
+            });
           }
         )
       ];
