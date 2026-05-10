@@ -63,10 +63,11 @@ in
           };
         };
 
-        mise = {
-          enable = true;
-          package = inputs.nixpkgs.legacyPackages.${pkgs.system}.mise;
-        };
+        # Mise tries to re-build direnv which currently hangs on mac
+        # mise = {
+        #   enable = true;
+        #   package = inputs.nixpkgs.legacyPackages.${pkgs.system}.mise;
+        # };
       };
     };
 }

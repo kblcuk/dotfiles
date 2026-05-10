@@ -5,6 +5,7 @@ _: {
       # Can be installed via nix as well, but
       # it always tries to build it from source
       "ffmpeg"
+      "mise"
     ];
     casks = [
       "heroic"
