@@ -1,14 +1,15 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    fish
-    zsh
-    bashInteractive
     # cachix
-    openssl
-    nixfmt-rfc-style
-    vim
+    bashInteractive
+    fish
     fzf
+    nixfmt-rfc-style
+    openssl
+    vim
     wget
+    zsh
+    git
   ];
 }
